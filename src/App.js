@@ -1,20 +1,21 @@
-import "./App.css";
-import hehfbahfb from "./Footer/footer";
+import React from "react";
+import "materialize-css";
+import "materialize-css/dist/css/materialize.min.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./components/home/Home";
+import Login from "./components/login/Login";
+import Register from "./components/register/Register";
+import ProtectedRoute from "./components/protectedRoute";
 
 function App() {
-  var LambdaVar1 = "TEST TEST 1";
-  var LambdaVar2 = "TEST TEST 2";
-  var LambdaVar3 = "TEST TEST 3";
-
   return (
-    <div className="App">
-      <h1>HELLO WORLD!</h1>
-
-      <h1>{LambdaVar1}</h1>
-      <h1>{LambdaVar2}</h1>
-      <h1>{LambdaVar3}</h1>
-      <h1>{hehfbahfb}</h1>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <ProtectedRoute path="/" component={Home} />
+      </Switch>
+    </Router>
   );
 }
 
