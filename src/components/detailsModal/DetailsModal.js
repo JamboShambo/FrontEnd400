@@ -1,20 +1,77 @@
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import React, { useState } from "react";
+import envVars from "../../config";
+import axios from "axios";
 
-function DetailsModal({ loggedInEmail, setLoggedInEmail }) {
+function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
   const [eventType, setEventType] = useState("");
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [coordinantes, setCoordinantes] = useState("");
 
+  const theUserID = window.localStorage.getItem("userID");
+
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(eventType);
-    console.log(eventName);
-    console.log(eventDescription);
-    console.log(coordinantes);
+
+    //close modal
+    setOpen(false);
+
+    //post
+    var rngID = getRandomInt(99999);
+    rngID = rngID.toString();
+    var data = JSON.stringify({
+      eventID: rngID,
+      eventType: eventType,
+      eventName: eventName,
+      eventTime: new Date(),
+      eventDescription: eventDescription,
+      lat: latToPost,
+      lng: lngToPost,
+      userID: localStorage.getItem("userID"),
+    });
+
+    console.log(data);
+    var config = {
+      method: "post",
+      url: envVars.PostEventInConfig,
+      headers: {
+        "x-api-key": envVars.CustomerApiKeyGateway,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    // setGetEvents((current) => [
+    //   ...current,
+    //   {
+    //     lat: e.latLng.lat(),
+    //     lng: e.latLng.lng(),
+    //     eventTime: new Date(),
+    //   },
+    // ]);
+
+    //response
+
+    //check response
+
+    //if good
+
+    //if bad
   };
+
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
 
   return (
     <div style={{ width: "50%", paddingTop: "5%" }} className="row">
@@ -56,12 +113,11 @@ function DetailsModal({ loggedInEmail, setLoggedInEmail }) {
         <div className="row">
           <div className="input-field col s12">
             <input
+              readOnly={true}
               id="coOrds"
               type="text"
-              value={coordinantes}
-              onChange={(event) => setCoordinantes(event.target.value)}
+              value={latToPost + " " + lngToPost}
             ></input>
-            <label htmlFor="coOrds">Coordinates</label>
           </div>
         </div>
 

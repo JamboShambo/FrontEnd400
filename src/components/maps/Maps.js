@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import "materialize-css";
+import "materialize-css/dist/css/materialize.min.css";
 import "../maps/Maps.css";
 import {
   GoogleMap,
@@ -23,12 +25,20 @@ import { formatRelative } from "date-fns";
 import "@reach/combobox/styles.css";
 import mapStyles from "./MapsStyle";
 import envVars from "../../config";
+import DetailsModal from "../detailsModal/DetailsModal";
+// import NestedModal from "../modal/Modal";
+
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
 
 const libraries = ["places"];
+
 const mapContainerStyle = {
   height: "95vh",
   width: "100vw",
 };
+
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
@@ -41,7 +51,9 @@ const center = {
   //53.52647,-7.433293 ireland more center
 };
 
-function Maps() {
+const theUserID = window.localStorage.getItem("userID");
+
+function Maps({ setUserID, userID }) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: envVars.gmapkey,
     libraries,
@@ -49,83 +61,89 @@ function Maps() {
 
   const [selected, setSelected] = React.useState(null);
   const [getEvents, setGetEvents] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [latToPost, setLatToPost] = React.useState("");
+  const [lngToPost, setLngToPost] = React.useState("");
 
-  useEffect(() => {
-    getTheEvents();
-  }, []);
+  // const [userID, setUserID] = React.useState("");
+
+  useEffect(() => {}, []);
 
   const getTheEvents = () => {
     axios
-      .get(envVars.GetAllEvents, {
+      .get(envVars.GetUsersEvents + theUserID, {
         headers: {
-          "x-api-key": envVars.CustomerApiKeyGateway, //the token is a variable which holds the token
+          "x-api-key": envVars.CustomerApiKeyGateway, // api key for API gateway
         },
       })
       .then((response) => {
-        console.log("Response " + response);
-        setGetEvents(response.data.events);
-        console.log(response.data.events);
+        response.data.Items.forEach((el) => {
+          el.lat.N = parseFloat(el.lat.N);
+          el.lng.N = parseFloat(el.lng.N);
+        });
+        setGetEvents(response.data.Items);
+        console.log(response.data.Items);
       })
       .catch((error) => {
         console.log(error);
       });
 
+    var zero = 0;
     getEvents.forEach((el) => {
-      el.lat = parseFloat(el.lat);
-      el.lng = parseFloat(el.lng);
+      // el.lat = parseFloat(el.lat);
+      // el.lng = parseFloat(el.lng);
+      // getEvents.filter((e) => e.userID === theUserID);
+      // if (el.userID === theUserID) {
+      //   // el.splice(zero, 1);
+      // }
+      zero++;
     });
-
-    console.log("Events " + getEvents.toString());
   };
 
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
-
   const onMapClick = React.useCallback((e) => {
-    var rngID = getRandomInt(9999);
-    rngID = rngID.toString();
-
-    var data = JSON.stringify({
-      eventID: rngID,
-      eventType: "1",
-      eventName: "Rubbish on path",
-      eventTime: new Date(),
-      eventDescription: "On mainstreet beside post office!",
-      lat: e.latLng.lat(),
-      lng: e.latLng.lng(),
-      user: "TestUser1",
-    });
+    // var rngID = getRandomInt(99999);
+    // rngID = rngID.toString();
+    // var data = JSON.stringify({
+    //   eventID: rngID,
+    //   eventType: "1",
+    //   eventName: "Rubbish on path",
+    //   eventTime: new Date(),
+    //   eventDescription: "On mainstreet beside post office!",
+    //   lat: e.latLng.lat(),
+    //   lng: e.latLng.lng(),
+    //   userID: theUserID,
+    // });
 
     console.log(e);
+    // console.log(data);
+    // var config = {
+    //   method: "post",
+    //   url: envVars.PostEventInConfig,
+    //   headers: {
+    //     "x-api-key": envVars.CustomerApiKeyGateway,
+    //     "Content-Type": "application/json",
+    //   },
+    //   data: data,
+    // };
 
-    console.log(data);
-    var config = {
-      method: "post",
-      url: envVars.PostEventInConfig,
-      headers: {
-        "x-api-key": envVars.CustomerApiKeyGateway,
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
+    setLatLngState(e);
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios(config)
+    //   .then(function (response) {
+    //     console.log(JSON.stringify(response.data));
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
 
-    setGetEvents((current) => [
-      ...current,
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        eventTime: new Date(),
-      },
-    ]);
+    // setGetEvents((current) => [
+    //   ...current,
+    //   {
+    //     lat: e.latLng.lat(),
+    //     lng: e.latLng.lng(),
+    //     eventTime: new Date(),
+    //   },
+    // ]);
   }, []);
 
   const mapRef = React.useRef();
@@ -142,9 +160,38 @@ function Maps() {
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  function setLatLngState(e) {
+    setLatToPost(e.latLng.lat());
+    setLngToPost(e.latLng.lng());
+  }
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    pt: 2,
+    px: 4,
+    pb: 3,
+  };
+
   return (
-    <div className="">
+    <div>
       <Locate panTo={panTo} />
+
+      {/* <DetailsModal></DetailsModal> */}
+      {/* <NestedModal></NestedModal> */}
       <Search panTo={panTo} />
 
       <GoogleMap
@@ -153,13 +200,17 @@ function Maps() {
         zoom={8}
         center={center}
         options={options}
-        onClick={onMapClick}
+        // onClick={handleOpen; onMapClick}
+        onClick={(event) => {
+          handleOpen();
+          onMapClick(event);
+        }}
         onLoad={onMapLoad}
       >
         {getEvents.map((marker) => (
           <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
+            key={`${marker.lat.N}-${marker.lng.N}`}
+            position={{ lat: marker.lat.N, lng: marker.lng.N }}
             onClick={() => {
               setSelected(marker);
             }}
@@ -182,7 +233,7 @@ function Maps() {
             <div>
               <h2>
                 {/* <span role="img" aria-label="">
-                  
+
                 </span>{" "} */}
                 Alert
               </h2>
@@ -192,10 +243,80 @@ function Maps() {
         ) : null}
       </GoogleMap>
 
-      <Locate panTo={panTo} />
+      {/* <Locate panTo={panTo} /> */}
+      <div>
+        <Button id="postEventClick" onClick={handleOpen}>
+          Open modal
+        </Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="parent-modal-title"
+          aria-describedby="parent-modal-description"
+        >
+          <Box sx={{ ...style, width: 600 }}>
+            <h2 id="parent-modal-title">Event Log</h2>
+            <p id="parent-modal-description">
+              <DetailsModal
+                latToPost={latToPost}
+                lngToPost={lngToPost}
+                open={open}
+                setOpen={setOpen}
+              ></DetailsModal>
+            </p>
+            {/* <ChildModal /> */}
+          </Box>
+        </Modal>
+      </div>
     </div>
   );
 }
+
+// function NestedModal() {
+//   const [open, setOpen] = React.useState(false);
+//   const handleOpen = () => {
+//     setOpen(true);
+//   };
+//   const handleClose = () => {
+//     setOpen(false);
+//   };
+
+//   const style = {
+//     position: "absolute",
+//     top: "50%",
+//     left: "50%",
+//     transform: "translate(-50%, -50%)",
+//     width: 400,
+//     bgcolor: "background.paper",
+//     border: "2px solid #000",
+//     boxShadow: 24,
+//     pt: 2,
+//     px: 4,
+//     pb: 3,
+//   };
+
+//   return (
+//     <div>
+//       <Button id="postEventClick" onClick={handleOpen}>
+//         Open modal
+//       </Button>
+//       <Modal
+//         open={open}
+//         onClose={handleClose}
+//         aria-labelledby="parent-modal-title"
+//         aria-describedby="parent-modal-description"
+//       >
+//         <Box sx={{ ...style, width: 600 }}>
+//           <h2 id="parent-modal-title">Event Log</h2>
+//           <p id="parent-modal-description">
+//             <DetailsModal></DetailsModal>
+//           </p>
+//           {/* <ChildModal /> */}
+//         </Box>
+//       </Modal>
+//     </div>
+//   );
+// }
 
 function Locate({ panTo }) {
   return (
@@ -234,7 +355,7 @@ function Search({ panTo }) {
   });
 
   //53.3942357,-10.1983269
-  // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
+  //https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
 
   const handleInput = (e) => {
     setValue(e.target.value);
