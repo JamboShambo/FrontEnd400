@@ -53,19 +53,11 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        window.location.pathname = "/home";
       })
       .catch(function (error) {
         console.log(error);
       });
-
-    // setGetEvents((current) => [
-    //   ...current,
-    //   {
-    //     lat: e.latLng.lat(),
-    //     lng: e.latLng.lng(),
-    //     eventTime: new Date(),
-    //   },
-    // ]);
 
     //response
 
