@@ -22,7 +22,7 @@ function Home() {
         <Maps />
       </Row>
 
-      <Row>
+      <Row style={{ marginBottom: "0%", marginTop: "0%" }}>
         <Foot></Foot>
       </Row>
     </div>
