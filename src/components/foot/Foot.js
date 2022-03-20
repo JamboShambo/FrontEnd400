@@ -12,12 +12,12 @@ function Foot() {
           <div class="nav-wrapper">
             <ul class="justify">
               <li>
-                <a href="#!">
+                <a href="/home">
                   <i class="material-icons">add</i>
                 </a>
               </li>
               <li>
-                <a href="#!">
+                <a href="/profile">
                   <i class="material-icons">accessibility</i>
                 </a>
               </li>
