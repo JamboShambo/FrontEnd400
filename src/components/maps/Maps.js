@@ -35,7 +35,7 @@ import Button from "@mui/material/Button";
 const libraries = ["places"];
 
 const mapContainerStyle = {
-  height: "95vh",
+  height: "95.5vh",
   width: "100vw",
 };
 
@@ -197,7 +197,7 @@ function Maps({ setUserID, userID }) {
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
-        zoom={8}
+        zoom={7.3}
         center={center}
         options={options}
         // onClick={handleOpen; onMapClick}
@@ -264,6 +264,8 @@ function Maps({ setUserID, userID }) {
                 lngToPost={lngToPost}
                 open={open}
                 setOpen={setOpen}
+                getEvents={getEvents}
+                setGetEvents={setGetEvents}
               ></DetailsModal>
             </p>
             {/* <ChildModal /> */}
