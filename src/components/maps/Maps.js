@@ -225,19 +225,21 @@ function Maps({ setUserID, userID }) {
 
         {selected ? (
           <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
+            position={{ lat: selected.lat.N, lng: selected.lng.N }}
             onCloseClick={() => {
               setSelected(null);
             }}
           >
             <div>
-              <h2>
-                {/* <span role="img" aria-label="">
+              <p>{selected.lat.N} </p>
+              <p>
+                {/* {d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " +d.getHours() + ":" + d.getMinutes()} */}
+                {selected.eventTime.S}
+              </p>
+              <p>{selected.eventType.S}</p>
+              <p>{selected.eventName.S}</p>
 
-                </span>{" "} */}
-                Alert
-              </h2>
-              <p>Spotted {formatRelative(selected.time, new Date())}</p>
+              {/* <p>Spotted {formatRelative(selected.time, new Date())}</p> */}
             </div>
           </InfoWindow>
         ) : null}
