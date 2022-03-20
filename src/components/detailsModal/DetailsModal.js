@@ -12,6 +12,13 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
 
   const theUserID = window.localStorage.getItem("userID");
 
+  var dateOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -25,7 +32,7 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
       eventID: rngID,
       eventType: eventType,
       eventName: eventName,
-      eventTime: new Date(),
+      eventTime: new Date().toLocaleDateString("en-US", dateOptions),
       eventDescription: eventDescription,
       lat: latToPost,
       lng: lngToPost,
