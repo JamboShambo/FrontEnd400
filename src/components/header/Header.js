@@ -7,11 +7,11 @@ import "./Header.css";
 
 function Header() {
   return (
-    <div class="navbar-fixed">
+    <div classname="navbar-fixed">
       <nav>
-        <div class="nav-wrapper teal darken-1">
-          <div class="row">
-            <div class="col s12">
+        <div classname="nav-wrapper teal darken-1">
+          <div classname="row">
+            <div classname="col s12">
               <img
                 src={logo}
                 alt="Roadcall"
@@ -19,7 +19,7 @@ function Header() {
                   maxWidth: "60px",
                   marginTop: "2px",
                 }}
-                class="brand-logo"
+                classname="brand-logo"
               ></img>
             </div>
           </div>

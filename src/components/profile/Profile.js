@@ -5,10 +5,10 @@ import { Row } from "react-materialize";
 import Header from "../header/Header";
 import Foot from "../foot/Foot";
 
-import Maps from "../maps/Maps";
+import ProfileMap from "../profileMap/ProfileMap";
 import DetailsModal from "../detailsModal/DetailsModal";
 
-function Home() {
+function Profile() {
   //sets a state to whether a submited booking has been posted
   const [userID, setUserID] = useState("");
 
@@ -19,13 +19,12 @@ function Home() {
       </Row> */}
 
       <Row style={{ marginBottom: "0%", marginTop: "0%" }}>
-        <Maps />
+        <ProfileMap></ProfileMap>
       </Row>
-
       <Row style={{ marginBottom: "0%", marginTop: "0%" }}>
         <Foot></Foot>
       </Row>
     </div>
   );
 }
-export default Home;
+export default Profile;

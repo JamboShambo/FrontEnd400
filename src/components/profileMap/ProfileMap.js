@@ -23,7 +23,7 @@ import {
 import { formatRelative } from "date-fns";
 
 import "@reach/combobox/styles.css";
-import mapStyles from "./MapsStyle";
+import mapStyles from "../maps/MapsStyle";
 import envVars from "../../config";
 import DetailsModal from "../detailsModal/DetailsModal";
 // import NestedModal from "../modal/Modal";
@@ -201,10 +201,10 @@ function Maps({ setUserID, userID }) {
         center={center}
         options={options}
         // onClick={handleOpen; onMapClick}
-        // onClick={(event) => {
-        //   handleOpen();
-        //   onMapClick(event);
-        // }}
+        onClick={(event) => {
+          handleOpen();
+          onMapClick(event);
+        }}
         onLoad={onMapLoad}
       >
         {getEvents.map((marker) => (
@@ -238,8 +238,6 @@ function Maps({ setUserID, userID }) {
               </p>
               <p>{selected.eventType.S}</p>
               <p>{selected.eventName.S}</p>
-
-              {/* <p>Spotted {formatRelative(selected.time, new Date())}</p> */}
             </div>
           </InfoWindow>
         ) : null}

@@ -12,23 +12,23 @@ function Foot() {
           <div class="nav-wrapper">
             <ul class="justify">
               <li>
-                <a href="#!">
-                  <i class="material-icons">filter</i>
+                <a href="/home">
+                  <i class="material-icons">add</i>
+                </a>
+              </li>
+              <li>
+                <a href="/profile">
+                  <i class="material-icons">accessibility</i>
                 </a>
               </li>
               <li>
                 <a href="#!">
-                  <i class="material-icons">chat_bubble</i>
+                  <i class="material-icons">bookmark_border</i>
                 </a>
               </li>
               <li>
                 <a href="#!">
-                  <i class="material-icons">camera_alt</i>
-                </a>
-              </li>
-              <li>
-                <a href="#!">
-                  <i class="material-icons">camera_roll</i>
+                  <i class="material-icons">cloud_circle</i>
                 </a>
               </li>
             </ul>
