@@ -264,8 +264,6 @@ function Maps({ setUserID, userID }) {
                 lngToPost={lngToPost}
                 open={open}
                 setOpen={setOpen}
-                getEvents={getEvents}
-                setGetEvents={setGetEvents}
               ></DetailsModal>
             </p>
             {/* <ChildModal /> */}
