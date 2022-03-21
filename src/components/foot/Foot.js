@@ -27,7 +27,7 @@ function Foot() {
                 </a>
               </li>
               <li>
-                <a href="#!">
+                <a href="/admin">
                   <i class="material-icons">cloud_circle</i>
                 </a>
               </li>
