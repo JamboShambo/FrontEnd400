@@ -135,7 +135,6 @@ function Maps({ setUserID, userID }) {
               <p>{selected.road.S}</p>
               <p>{selected.suburb.S}</p>
               <p>{selected.county.S}</p>
-              <p>{selected.postcode.S}</p>
             </div>
           </InfoWindow>
         ) : null}
