@@ -674,4 +674,4 @@ const style5 = [
   },
 ];
 
-export default style1;
+export default style4;
