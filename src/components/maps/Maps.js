@@ -28,8 +28,8 @@ import envVars from "../../config";
 const libraries = ["places"];
 
 const mapContainerStyle = {
-  height: "95.5vh",
-  width: "100vw",
+  height: "500px",
+  width: "100%",
 };
 
 const options = {
@@ -92,10 +92,10 @@ function Maps({ setUserID, userID }) {
   if (!isLoaded) return "Loading...";
 
   return (
-    <div>
-      <Locate panTo={panTo} />
+    <div style={{ border: "3px solid black" }}>
+      {/* <Locate panTo={panTo} />
 
-      <Search panTo={panTo} />
+      <Search panTo={panTo} /> */}
 
       <GoogleMap
         id="map"
@@ -200,7 +200,7 @@ function Search({ panTo }) {
   };
 
   return (
-    <div className="search" style={{ float: "left" }}>
+    <div className="search" style={{}}>
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
           value={value}
