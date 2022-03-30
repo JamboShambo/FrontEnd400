@@ -9,9 +9,9 @@ function ReportTableCell(getEvents) {
 
   return (
     <tr>
-      <td>{getEvents.getEvents.eventName}</td>
+      {/* <td>{getEvents.getEvents.eventName}</td>
       <td>{getEvents.getEvents.county}</td>
-      <td>{getEvents.getEvents.eventTime}</td>
+      <td>{getEvents.getEvents.eventTime}</td> */}
     </tr>
   );
 }
