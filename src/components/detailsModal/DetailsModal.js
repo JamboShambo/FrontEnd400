@@ -145,14 +145,24 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
     <div style={{ width: "50%", paddingTop: "5%" }} className="row">
       <form className="col s12" method="post" onSubmit={onSubmit}>
         <div className="row">
-          <div className="input-field col s12">
-            <input
+          <div class="input-field col s12">
+            <label>Event Type</label>
+            <select
               id="eventType"
               type="text"
               value={eventType}
               onChange={(event) => setEventType(event.target.value)}
-            ></input>
-            <label htmlFor="eventType">Event Type</label>
+              className="browser-default"
+            >
+              <option value="" disabled selected></option>
+              <option value="Graffiti">Graffiti</option>
+              <option value="Road or Path">Road or Path</option>
+              <option value="Street Lighting">Street Lighting</option>
+              <option value="Litter and Illegal Dumping">
+                Litter and Illegal Dumping
+              </option>
+              <option value="Tree and Grass">Tree and Grass</option>
+            </select>
           </div>
         </div>
         <div className="row">
