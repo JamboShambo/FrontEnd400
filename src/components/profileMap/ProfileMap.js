@@ -20,7 +20,6 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
-import { formatRelative } from "date-fns";
 
 import "@reach/combobox/styles.css";
 import mapStyles from "../maps/MapsStyle";
@@ -87,63 +86,11 @@ function Maps({ setUserID, userID }) {
       .catch((error) => {
         console.log(error);
       });
-
-    var zero = 0;
-    getEvents.forEach((el) => {
-      // el.lat = parseFloat(el.lat);
-      // el.lng = parseFloat(el.lng);
-      // getEvents.filter((e) => e.userID === theUserID);
-      // if (el.userID === theUserID) {
-      //   // el.splice(zero, 1);
-      // }
-      zero++;
-    });
   };
 
   const onMapClick = React.useCallback((e) => {
-    // var rngID = getRandomInt(99999);
-    // rngID = rngID.toString();
-    // var data = JSON.stringify({
-    //   eventID: rngID,
-    //   eventType: "1",
-    //   eventName: "Rubbish on path",
-    //   eventTime: new Date(),
-    //   eventDescription: "On mainstreet beside post office!",
-    //   lat: e.latLng.lat(),
-    //   lng: e.latLng.lng(),
-    //   userID: theUserID,
-    // });
-
     console.log(e);
-    // console.log(data);
-    // var config = {
-    //   method: "post",
-    //   url: envVars.PostEventInConfig,
-    //   headers: {
-    //     "x-api-key": envVars.CustomerApiKeyGateway,
-    //     "Content-Type": "application/json",
-    //   },
-    //   data: data,
-    // };
-
     setLatLngState(e);
-
-    // axios(config)
-    //   .then(function (response) {
-    //     console.log(JSON.stringify(response.data));
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-
-    // setGetEvents((current) => [
-    //   ...current,
-    //   {
-    //     lat: e.latLng.lat(),
-    //     lng: e.latLng.lng(),
-    //     eventTime: new Date(),
-    //   },
-    // ]);
   }, []);
 
   const mapRef = React.useRef();
@@ -190,8 +137,6 @@ function Maps({ setUserID, userID }) {
     <div>
       <Locate panTo={panTo} />
 
-      {/* <DetailsModal></DetailsModal> */}
-      {/* <NestedModal></NestedModal> */}
       <Search panTo={panTo} />
 
       <GoogleMap
@@ -200,7 +145,6 @@ function Maps({ setUserID, userID }) {
         zoom={7.3}
         center={center}
         options={options}
-        // onClick={handleOpen; onMapClick}
         onClick={(event) => {
           handleOpen();
           onMapClick(event);
@@ -231,13 +175,13 @@ function Maps({ setUserID, userID }) {
             }}
           >
             <div>
-              <p>{selected.lat.N} </p>
-              <p>
-                {/* {d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " +d.getHours() + ":" + d.getMinutes()} */}
-                {selected.eventTime.S}
-              </p>
+              <p>{selected.eventTime.S}</p>
               <p>{selected.eventType.S}</p>
               <p>{selected.eventName.S}</p>
+              <p>{selected.road.S}</p>
+              <p>{selected.suburb.S}</p>
+              <p>{selected.county.S}</p>
+              <p>{selected.postcode.S}</p>
             </div>
           </InfoWindow>
         ) : null}
@@ -271,52 +215,6 @@ function Maps({ setUserID, userID }) {
     </div>
   );
 }
-
-// function NestedModal() {
-//   const [open, setOpen] = React.useState(false);
-//   const handleOpen = () => {
-//     setOpen(true);
-//   };
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-
-//   const style = {
-//     position: "absolute",
-//     top: "50%",
-//     left: "50%",
-//     transform: "translate(-50%, -50%)",
-//     width: 400,
-//     bgcolor: "background.paper",
-//     border: "2px solid #000",
-//     boxShadow: 24,
-//     pt: 2,
-//     px: 4,
-//     pb: 3,
-//   };
-
-//   return (
-//     <div>
-//       <Button id="postEventClick" onClick={handleOpen}>
-//         Open modal
-//       </Button>
-//       <Modal
-//         open={open}
-//         onClose={handleClose}
-//         aria-labelledby="parent-modal-title"
-//         aria-describedby="parent-modal-description"
-//       >
-//         <Box sx={{ ...style, width: 600 }}>
-//           <h2 id="parent-modal-title">Event Log</h2>
-//           <p id="parent-modal-description">
-//             <DetailsModal></DetailsModal>
-//           </p>
-//           {/* <ChildModal /> */}
-//         </Box>
-//       </Modal>
-//     </div>
-//   );
-// }
 
 function Locate({ panTo }) {
   return (
@@ -383,22 +281,10 @@ function Search({ panTo }) {
           disabled={!ready}
           placeholder="Search your location"
           style={{
-            // textColor: "White",
-            // textDecorationColor: "red",
-            // backgroundColor: "Black",
             color: "Black",
           }}
         />
-        <ComboboxPopover
-          style={
-            {
-              // textColor: "red",
-              // textDecorationColor: "red",
-              // backgroundColor: "red",
-              // color: "red",
-            }
-          }
-        >
+        <ComboboxPopover>
           <ComboboxList>
             {status === "OK" &&
               data.map(({ id, description }) => (

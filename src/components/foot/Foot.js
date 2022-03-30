@@ -8,7 +8,7 @@ function Foot() {
   return (
     <div class="footer-fixed">
       <footer>
-        <nav class="z-depth-0 teal darken-1">
+        <nav class="z-depth-0 black darken-1">
           <div class="nav-wrapper">
             <ul class="justify">
               <li>
@@ -27,7 +27,7 @@ function Foot() {
                 </a>
               </li>
               <li>
-                <a href="#!">
+                <a href="/admin">
                   <i class="material-icons">cloud_circle</i>
                 </a>
               </li>

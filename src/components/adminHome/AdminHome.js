@@ -4,24 +4,19 @@ import "materialize-css/dist/css/materialize.min.css";
 import { Row } from "react-materialize";
 import Foot from "../foot/Foot";
 
-import ProfileMap from "../profileMap/ProfileMap";
+import AdminPage from "../adminPage/AdminPage";
 
-function Profile() {
-  //sets a state to whether a submited booking has been posted
-
+function AdminHome() {
   return (
     <div>
-      {/* <Row style={{ marginBottom: "10%" }}>
-        <Header></Header>
-      </Row> */}
-
       <Row style={{ marginBottom: "0%", marginTop: "0%" }}>
-        <ProfileMap></ProfileMap>
+        <AdminPage />
       </Row>
+
       <Row style={{ marginBottom: "0%", marginTop: "0%" }}>
         <Foot></Foot>
       </Row>
     </div>
   );
 }
-export default Profile;
+export default AdminHome;
