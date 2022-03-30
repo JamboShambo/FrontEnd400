@@ -15,33 +15,40 @@ function Home() {
     <div style={{ backgroundColor: "#e0e0e0" }}>
       <div className="container">
         <div class="row">
-          <div style={{ border: "2px solid green" }} class="col s12">
-            What is Road call
+          <div style={{ border: "2px solid green" }} class="col l12 s12">
+            <WhatIsRoadCall></WhatIsRoadCall>
           </div>
         </div>
       </div>
 
       <div className="container">
         <div class="row">
-          <div style={{ border: "2px solid green" }} class="col s8">
+          <div style={{ border: "2px solid green" }} class="col l8 s12">
             <Maps />
+            <div
+              style={{ border: "2px solid green", float: "left" }}
+              class="col l12 s12"
+            >
+              Categories
+            </div>
           </div>
-          <div style={{ border: "2px solid green" }} class="col s4">
+          <div style={{ border: "2px solid green" }} class="col l4 s12">
             <ReportTable></ReportTable>
           </div>
-        </div>
-      </div>
 
-      <div className="container">
-        <div class="row">
-          <div style={{ border: "2px solid green" }} class="col s8">
-            Categories
-          </div>
-          <div style={{ border: "2px solid green" }} class="col s4">
+          <div style={{ border: "2px solid green" }} class="col l4 s12">
             NEWS
           </div>
         </div>
       </div>
+
+      {/* <div className="container">
+        <div class="row">
+          <div style={{ border: "2px solid green" }} class="col s4">
+            NEWS
+          </div>
+        </div>
+      </div> */}
 
       <Row
         className="container"
