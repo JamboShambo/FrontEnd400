@@ -7,6 +7,7 @@ import Foot from "../foot/Foot";
 import Maps from "../maps/Maps";
 import WhatIsRoadCall from "../whatIsRoadcall/WhatIsRoadCall";
 import ReportTable from "../reportTable/ReportTable";
+import Categories from "../categories/Categories";
 
 function Home() {
   //sets a state to whether a submited booking has been posted
@@ -25,19 +26,16 @@ function Home() {
         <div class="row">
           <div style={{ border: "2px solid green" }} class="col l8 s12">
             <Maps />
-            <div
-              style={{ border: "2px solid green", float: "left" }}
-              class="col l12 s12"
-            >
-              Categories
-            </div>
-          </div>
-          <div style={{ border: "2px solid green" }} class="col l4 s12">
-            <ReportTable></ReportTable>
           </div>
 
           <div style={{ border: "2px solid green" }} class="col l4 s12">
+            <Categories></Categories>
+          </div>
+          <div style={{ border: "2px solid green" }} class="col l4 s12">
             NEWS
+          </div>
+          <div style={{ border: "2px solid green" }} class="col l8 s12">
+            <ReportTable></ReportTable>
           </div>
         </div>
       </div>
