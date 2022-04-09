@@ -8,7 +8,7 @@ function Foot() {
   return (
     <div class="footer-fixed">
       <footer>
-        <nav class="z-depth-0 black darken-1">
+        <nav class="z-depth-0 grey">
           <div class="nav-wrapper">
             <ul class="justify">
               <li>

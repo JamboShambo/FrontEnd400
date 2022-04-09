@@ -22,7 +22,7 @@ import {
 } from "@reach/combobox";
 
 import "@reach/combobox/styles.css";
-import mapStyles from "./MapsStyle";
+import { style1, style2, style3, style4, style5 } from "../maps/MapsStyle";
 import envVars from "../../config";
 
 const libraries = ["places"];
@@ -32,8 +32,8 @@ const mapContainerStyle = {
   width: "100%",
 };
 
-const options = {
-  styles: mapStyles,
+var options = {
+  styles: style5,
   disableDefaultUI: true,
   zoomControl: true,
 };
@@ -44,7 +44,7 @@ const center = {
   //53.52647,-7.433293 ireland more center
 };
 
-const theUserID = window.localStorage.getItem("userID");
+// const theUserID = window.localStorage.getItem("userID");
 
 function Maps({ setUserID, userID }) {
   const { isLoaded, loadError } = useLoadScript({
@@ -59,18 +59,22 @@ function Maps({ setUserID, userID }) {
 
   const getTheEvents = () => {
     axios
-      .get(envVars.GetUsersEvents + theUserID, {
+      .get(envVars.GetAllEvents, {
         headers: {
           "x-api-key": envVars.CustomerApiKeyGateway, // api key for API gateway
         },
       })
       .then((response) => {
-        response.data.Items.forEach((el) => {
-          el.lat.N = parseFloat(el.lat.N);
-          el.lng.N = parseFloat(el.lng.N);
+        response.data.events.forEach((el) => {
+          el.lat = parseFloat(el.lat);
+          el.lng = parseFloat(el.lng);
         });
-        setGetEvents(response.data.Items);
-        console.log(response.data.Items);
+        setGetEvents(response.data.events);
+        console.log(response.data.events);
+        localStorage.setItem(
+          "homePageEvents",
+          JSON.stringify(response.data.events)
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -93,10 +97,6 @@ function Maps({ setUserID, userID }) {
 
   return (
     <div style={{ border: "3px solid black" }}>
-      {/* <Locate panTo={panTo} />
-
-      <Search panTo={panTo} /> */}
-
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
@@ -107,8 +107,8 @@ function Maps({ setUserID, userID }) {
       >
         {getEvents.map((marker) => (
           <Marker
-            key={`${marker.lat.N}-${marker.lng.N}`}
-            position={{ lat: marker.lat.N, lng: marker.lng.N }}
+            key={`${marker.lat}-${marker.lng}`}
+            position={{ lat: marker.lat, lng: marker.lng }}
             onClick={() => {
               setSelected(marker);
             }}
@@ -123,22 +123,44 @@ function Maps({ setUserID, userID }) {
 
         {selected ? (
           <InfoWindow
-            position={{ lat: selected.lat.N, lng: selected.lng.N }}
+            position={{ lat: selected.lat, lng: selected.lng }}
             onCloseClick={() => {
               setSelected(null);
             }}
           >
             <div>
-              <p>{selected.eventTime.S}</p>
-              <p>{selected.eventType.S}</p>
-              <p>{selected.eventName.S}</p>
-              <p>{selected.road.S}</p>
-              <p>{selected.suburb.S}</p>
-              <p>{selected.county.S}</p>
+              <p>{selected.eventTime}</p>
+              <p>{selected.eventType}</p>
+              <p>{selected.eventName}</p>
+              <p>{selected.road}</p>
+              <p>{selected.suburb}</p>
+              <p>{selected.county}</p>
             </div>
           </InfoWindow>
         ) : null}
       </GoogleMap>
+
+      <div
+        className="container"
+        style={{ backgroundColor: "black", width: "100%" }}
+      >
+        <div className="row" style={{ margin: "0px", width: "100%" }}>
+          <div className="col l4 s12">
+            <Search panTo={panTo} />
+          </div>
+          <div
+            className="col l4 s6 center-align"
+            style={{ marginTop: "10px", color: "White" }}
+          >
+            <a class="waves-effect waves-light btn grey">
+              <i class="material-icons right">cloud</i>Map Style
+            </a>
+          </div>
+          <div className="col l4 s6">
+            <Locate panTo={panTo} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -146,7 +168,8 @@ function Maps({ setUserID, userID }) {
 function Locate({ panTo }) {
   return (
     <button
-      className="locate"
+      style={{ marginTop: "10px", color: "white" }}
+      className="locate waves-effect waves-light btn grey"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -159,7 +182,7 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <img src="/compass.svg" alt="compass" style={{ width: "80px" }} />
+      <i class="material-icons right">cloud</i> Your Locate
     </button>
   );
 }
@@ -195,7 +218,7 @@ function Search({ panTo }) {
       const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
     } catch (error) {
-      console.log("😱 Error: ", error);
+      console.log("Error: ", error);
     }
   };
 
@@ -203,6 +226,7 @@ function Search({ panTo }) {
     <div className="search" style={{}}>
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
+          style={{ color: "White" }}
           value={value}
           onChange={handleInput}
           disabled={!ready}

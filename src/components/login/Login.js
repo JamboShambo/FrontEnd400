@@ -3,7 +3,6 @@ import "materialize-css/dist/css/materialize.min.css";
 import React, { useState, useEffect } from "react";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 import UserPool from "../userpool/Userpool";
-import logo from "../../componentText/images/roadcallphoto-removebg-preview.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -49,92 +48,87 @@ const Login = () => {
   };
 
   return (
-    <div htmlFor="section">
-      <main>
-        <center>
-          <img
-            className="responsive-img"
-            alt="OverBooked"
-            src={logo}
-            style={{
-              width: "10%",
-            }}
-          />
+    <center>
+      <div
+        className="container"
+        style={{
+          paddingTop: "10px",
+          maxHeight: "500px",
+          marginBottom: "10px",
+          width: "500px",
+        }}
+      >
+        <img
+          className="responsive-img"
+          alt="RoadCall"
+          src="./RoadCallTrimmed-removebg-preview.png"
+          style={{
+            width: "100px",
+          }}
+        />
+        <h5 className="grey-text">Please Login</h5>
 
-          <h5 className="grey-text">Please login into your account</h5>
-          <div className="section"></div>
-
-          <div>
-            <div className="regex">
+        <div className="">
+          <div className="regex">
+            {" "}
+            <br />
+            <p style={{ backgroundColor: "red", color: "white", width: "50%" }}>
               {" "}
-              <br />
-              <p>
-                {" "}
-                {loginError} {loginErrorMessage}
-              </p>
-            </div>
+              {loginError} {loginErrorMessage}
+            </p>
           </div>
-
-          <div className="container">
-            <div
-              className="z-depth-1 grey lighten-4"
-              style={{
-                display: "inline-block",
-                padding: "32px 48px 0px 48px",
-                border: "1px solid #EEE",
-              }}
-            >
-              <form className="col s12" method="post" onSubmit={onSubmit}>
-                <div className="row">
-                  <div className="col s12"></div>
-                </div>
-                <div className="row">
-                  <div className="input-field col s12">
-                    <input
-                      className="validate"
-                      type="email"
-                      name="email"
-                      id="email"
-                      value={email}
-                      onChange={(event) => setEmail(event.target.value)}
-                    />
-                    <label htmlFor="email">Enter your email</label>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="input-field col s12">
-                    <input
-                      className="validate"
-                      type="password"
-                      name="password"
-                      id="password"
-                      value={password}
-                      onChange={(event) => setPassword(event.target.value)}
-                    />
-                    <label htmlFor="password">Enter your password</label>
-                  </div>
-                </div>
-
-                <br />
-                <center>
-                  <div className="row">
-                    <button
-                      type="submit"
-                      name="btn_login"
-                      className="col s11 btn btn-large waves-effect indigo"
-                    >
-                      Login
-                    </button>
-                  </div>
-                </center>
-              </form>
+        </div>
+        <div
+          className="z-depth-1 grey lighten-4"
+          style={{
+            display: "inline-block",
+            padding: "32px 48px 0px 48px",
+            border: "1px solid #EEE",
+            width: "100%",
+          }}
+        >
+          <form className="row" method="post" onSubmit={onSubmit}>
+            <div className="input-field ">
+              <input
+                className="validate"
+                type="email"
+                name="email"
+                id="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <label htmlFor="email">Enter your email</label>
             </div>
-          </div>
-          <a href="/register">Create account</a>
-        </center>
-      </main>
-    </div>
+
+            <div className="">
+              <div className="input-field">
+                <input
+                  className="validate"
+                  type="password"
+                  name="password"
+                  id="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+                <label htmlFor="password">Enter your password</label>
+              </div>
+            </div>
+
+            <div className="">
+              <div className="row">
+                <button
+                  type="submit"
+                  name="btn_login"
+                  className="col s12 btn btn-large waves-effect indigo col 12"
+                >
+                  Login
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </center>
   );
 };
 

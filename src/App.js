@@ -17,7 +17,7 @@ function App() {
         <Route path="/register" component={Register} />
         <ProtectedRoute path="/profile" component={Profile} />
         <ProtectedRoute path="/admin" component={AdminHome} />
-        <ProtectedRoute path="/" component={Home} />
+        <Route path="/" component={Home} />
       </Switch>
     </Router>
   );
