@@ -8,15 +8,22 @@ import Maps from "../maps/Maps";
 import WhatIsRoadCall from "../whatIsRoadcall/WhatIsRoadCall";
 import ReportTable from "../reportTable/ReportTable";
 import Categories from "../categories/Categories";
+import Header from "../header/Header";
 
 function Home() {
   //sets a state to whether a submited booking has been posted
 
+  // style={{ border: "2px solid green" }}
+
   return (
     <div style={{ backgroundColor: "#e0e0e0" }}>
+      <div style={{ paddingBottom: "10px" }} class="col l8 s12">
+        <Header></Header>
+      </div>
+
       <div className="container">
         <div class="row">
-          <div style={{ border: "2px solid green" }} class="col l12 s12">
+          <div class="col l12 s12">
             <WhatIsRoadCall></WhatIsRoadCall>
           </div>
         </div>
@@ -24,17 +31,15 @@ function Home() {
 
       <div className="container">
         <div class="row">
-          <div style={{ border: "2px solid green" }} class="col l8 s12">
+          <div class="col l8 s12">
             <Maps />
           </div>
 
-          <div style={{ border: "2px solid green" }} class="col l4 s12">
+          <div class="col l4 s12">
             <Categories></Categories>
           </div>
-          <div style={{ border: "2px solid green" }} class="col l4 s12">
-            NEWS
-          </div>
-          <div style={{ border: "2px solid green" }} class="col l8 s12">
+          <div class="col l4 s12">NEWS</div>
+          <div class="col l8 s12">
             <ReportTable></ReportTable>
           </div>
         </div>
