@@ -22,7 +22,7 @@ import {
 } from "@reach/combobox";
 
 import "@reach/combobox/styles.css";
-import mapStyles from "../maps/MapsStyle";
+import { style1, style2, style3, style4, style5 } from "../maps/MapsStyle";
 import envVars from "../../config";
 import DetailsModal from "../detailsModal/DetailsModal";
 // import NestedModal from "../modal/Modal";
@@ -39,7 +39,7 @@ const mapContainerStyle = {
 };
 
 const options = {
-  styles: mapStyles,
+  styles: style1,
   disableDefaultUI: true,
   zoomControl: true,
 };
@@ -181,7 +181,6 @@ function Maps({ setUserID, userID }) {
               <p>{selected.road.S}</p>
               <p>{selected.suburb.S}</p>
               <p>{selected.county.S}</p>
-              <p>{selected.postcode.S}</p>
             </div>
           </InfoWindow>
         ) : null}
