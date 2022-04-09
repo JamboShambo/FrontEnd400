@@ -103,7 +103,6 @@ function Maps({ setUserID, userID }) {
         zoom={7.3}
         center={center}
         options={options}
-        // styles={style4}
         onLoad={onMapLoad}
       >
         {getEvents.map((marker) => (
