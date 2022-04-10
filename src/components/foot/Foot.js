@@ -13,22 +13,27 @@ function Foot() {
             <ul class="justify">
               <li>
                 <a href="/home">
-                  <i class="material-icons">add</i>
+                  <i class="material-icons">home</i>
                 </a>
               </li>
               <li>
                 <a href="/profile">
-                  <i class="material-icons">accessibility</i>
+                  <i class="material-icons">account_circle</i>
+                </a>
+              </li>
+              {/* <li>
+                <a href="#!">
+                  <i class="material-icons">bookmark_border</i>
                 </a>
               </li>
               <li>
                 <a href="#!">
                   <i class="material-icons">bookmark_border</i>
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a href="/admin">
-                  <i class="material-icons">cloud_circle</i>
+                  <i class="material-icons">exit_to_app</i>
                 </a>
               </li>
             </ul>
