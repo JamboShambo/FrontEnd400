@@ -7,7 +7,7 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import CategoryModal from "../categoryModal/CategoryModal";
 
-function Categories() {
+function CategoriesProfile() {
   //sets a state to whether a submited booking has been posted
   const [open, setOpen] = React.useState(false);
 
@@ -39,12 +39,8 @@ function Categories() {
   };
 
   return (
-    <div className="z-depth-1 lighten-1" style={{ backgroundColor: "#145d89" }}>
-      <h3 className="center">Categories</h3>
-      <p className="center">
-        These are the different types of events you can report!
-      </p>
-      <div className="grey" style={{}}>
+    <div className="z-depth-1 grey lighten-3" style={{ backgroundColor: "" }}>
+      <div className="grey center" style={{}}>
         <div
           onMouseOver={MouseOver}
           onClick={handleOpen}
@@ -117,4 +113,4 @@ function Categories() {
     </div>
   );
 }
-export default Categories;
+export default CategoriesProfile;

@@ -15,6 +15,10 @@ const Login = () => {
     setUserID(userID);
   }, [userID]);
 
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -30,11 +34,13 @@ const Login = () => {
 
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
-        console.log("onSuccess: ", data);
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("userEmail", email);
-        localStorage.setItem("userID", data.accessToken.payload.username);
-        window.location.pathname = "/home";
+        sleep(1500).then(() => {
+          console.log("onSuccess: ", data);
+          localStorage.setItem("isAuthenticated", "true");
+          localStorage.setItem("userEmail", email);
+          localStorage.setItem("userID", data.accessToken.payload.username);
+          window.location.pathname = "/home";
+        });
       },
       onFailure: (err) => {
         console.error("onFailure: ", err);
@@ -48,16 +54,15 @@ const Login = () => {
   };
 
   return (
-    <center>
-      <div
-        className="container"
-        style={{
-          paddingTop: "10px",
-          maxHeight: "500px",
-          marginBottom: "10px",
-          width: "500px",
-        }}
-      >
+    <div
+      className="container"
+      style={{
+        paddingTop: "10px",
+        maxHeight: "500px",
+        marginBottom: "10px",
+      }}
+    >
+      <center>
         <img
           className="responsive-img"
           alt="RoadCall"
@@ -67,8 +72,7 @@ const Login = () => {
           }}
         />
         <h5 className="grey-text">Please Login</h5>
-
-        <div className="">
+        <div className="row">
           <div className="regex">
             {" "}
             <br />
@@ -78,57 +82,63 @@ const Login = () => {
             </p>
           </div>
         </div>
-        <div
-          className="z-depth-1 grey lighten-4"
-          style={{
-            display: "inline-block",
-            padding: "32px 48px 0px 48px",
-            border: "1px solid #EEE",
-            width: "100%",
-          }}
-        >
-          <form className="row" method="post" onSubmit={onSubmit}>
-            <div className="input-field ">
-              <input
-                className="validate"
-                type="email"
-                name="email"
-                id="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-              <label htmlFor="email">Enter your email</label>
-            </div>
-
-            <div className="">
-              <div className="input-field">
-                <input
-                  className="validate"
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-                <label htmlFor="password">Enter your password</label>
-              </div>
-            </div>
-
-            <div className="">
+        <div className="container">
+          <div
+            className="z-depth-1 grey lighten-4"
+            style={{
+              display: "inline-block",
+              padding: "32px 48px 0px 48px",
+              border: "1px solid #EEE",
+            }}
+          >
+            <form className="col l12" method="post">
               <div className="row">
-                <button
-                  type="submit"
-                  name="btn_login"
-                  className="col s12 btn btn-large waves-effect indigo col 12"
-                >
-                  Login
-                </button>
+                <div className="input-field col l12">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                  />
+                  <label htmlFor="email">Enter your email</label>
+                </div>
               </div>
-            </div>
-          </form>
+
+              <div className="row">
+                <div className="input-field col l12">
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
+                  <label htmlFor="password">Enter your password</label>
+                </div>
+              </div>
+
+              <center>
+                <div className="row">
+                  <div
+                    onClick={onSubmit}
+                    name="btn_login"
+                    className="col l12 s12 btn btn-large waves-effect indigo"
+                  >
+                    Login
+                  </div>
+                </div>
+                <label>
+                  <a className="pink-text" href="/register">
+                    <b>Need to Register?</b>
+                  </a>
+                </label>
+              </center>
+            </form>
+          </div>
         </div>
-      </div>
-    </center>
+      </center>
+    </div>
   );
 };
 

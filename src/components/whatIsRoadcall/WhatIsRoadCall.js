@@ -17,7 +17,7 @@ function WhatIsRoadCall() {
             data will be passed over to the local county council. With this
             information they can make better decisions on what to address! So
             keep reporting and lets get our communities in tip top shape!
-            <b style={{ color: "Black" }}> - Team RoadCall </b>
+            <b style={{ color: "#145d89" }}> - Team RoadCall </b>
           </span>
         </div>
       </div>

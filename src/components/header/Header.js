@@ -6,8 +6,14 @@ import "./Header.css";
 
 function Header() {
   var isLoggedIn = window.localStorage.getItem("isAuthenticated");
+  var userEmail = window.localStorage.getItem("userEmail");
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    var isLoggedIn = window.localStorage.getItem("isAuthenticated");
+    if (isLoggedIn === "false") {
+      localStorage.setItem("userEmail", "");
+    }
+  }, []);
 
   return (
     <nav>
@@ -24,28 +30,70 @@ function Header() {
             alt="LOGO"
           ></img>
         </a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li>
-            {isLoggedIn === "true" ? (
-              // eslint-disable-next-line jsx-a11y/anchor-is-valid
-              <a onClick={logOut}>Logout</a>
-            ) : (
-              // eslint-disable-next-line jsx-a11y/anchor-is-valid
-              <a onClick={logIn}>Login</a>
-            )}
 
-            {/* <a href="collapsible.html">LogOut</a> */}
-          </li>
-        </ul>
+        {window.location.pathname === "/home" ? (
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li style={{ marginRight: "140px", pointerEvents: "none" }}>
+              <a style={{ color: "#145d89" }}>{userEmail}</a>
+            </li>
+            <li className="center active">
+              <a>Home</a>
+            </li>
+            <li className="center">
+              {isLoggedIn === "true" ? (
+                // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                <a>Profile</a>
+              ) : (
+                // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                <a></a>
+              )}
+            </li>
+            <li className="center">
+              {isLoggedIn === "true" ? (
+                // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                <a onClick={logOut}>Logout</a>
+              ) : (
+                // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                <a onClick={logIn}>Login</a>
+              )}
+            </li>
+          </ul>
+        ) : (
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li className="center">
+              <a>Home</a>
+            </li>
+            <li className="center active">
+              {isLoggedIn === "true" ? (
+                // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                <a>Profile</a>
+              ) : (
+                // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                <a></a>
+              )}
+            </li>
+            <li className="center">
+              {isLoggedIn === "true" ? (
+                // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                <a onClick={logOut}>Logout</a>
+              ) : (
+                // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                <a onClick={logIn}>Login</a>
+              )}
+            </li>
+          </ul>
+        )}
       </div>
     </nav>
   );
 }
 
+// element.classList.add("my-class");
+
 function logOut() {
   sleep(1500).then(() => {
     localStorage.setItem("isAuthenticated", "false");
-    window.location.pathname = "/home";
+    window.location.pathname = "/login";
   });
 }
 
@@ -54,9 +102,8 @@ function sleep(ms) {
 }
 
 function logIn() {
-  sleep(1500).then(() => {
-    localStorage.setItem("isAuthenticated", "true");
-    window.location.pathname = "/home";
+  sleep().then(() => {
+    window.location.pathname = "/login";
   });
 }
 

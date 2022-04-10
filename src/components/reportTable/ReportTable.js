@@ -15,7 +15,7 @@ function ReportTable() {
   var rows = [];
 
   function reverseArr(input) {
-    var ret = new Array();
+    var ret = [];
     for (var i = input.length - 1; i >= 0; i--) {
       ret.push(input[i]);
     }
@@ -27,8 +27,8 @@ function ReportTable() {
   }
 
   return (
-    <div className="white" style={{}}>
-      <h3>Latest Reports</h3>
+    <div className="z-depth-1 lighten-1" style={{ backgroundColor: "#145d89" }}>
+      <h3 className="center">Latest Reports</h3>
       <div className="white" style={{}}>
         <table className="highlight responsive-table">
           <thead>
