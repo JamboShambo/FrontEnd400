@@ -15,6 +15,10 @@ const Login = () => {
     setUserID(userID);
   }, [userID]);
 
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -30,11 +34,13 @@ const Login = () => {
 
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
-        console.log("onSuccess: ", data);
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("userEmail", email);
-        localStorage.setItem("userID", data.accessToken.payload.username);
-        window.location.pathname = "/home";
+        sleep(1500).then(() => {
+          console.log("onSuccess: ", data);
+          localStorage.setItem("isAuthenticated", "true");
+          localStorage.setItem("userEmail", email);
+          localStorage.setItem("userID", data.accessToken.payload.username);
+          window.location.pathname = "/home";
+        });
       },
       onFailure: (err) => {
         console.error("onFailure: ", err);
@@ -49,7 +55,7 @@ const Login = () => {
 
   return (
     <div
-      className=""
+      className="container"
       style={{
         paddingTop: "10px",
         maxHeight: "500px",
@@ -66,6 +72,16 @@ const Login = () => {
           }}
         />
         <h5 className="grey-text">Please Login</h5>
+        <div className="row">
+          <div className="regex">
+            {" "}
+            <br />
+            <p style={{ backgroundColor: "red", color: "white", width: "50%" }}>
+              {" "}
+              {loginError} {loginErrorMessage}
+            </p>
+          </div>
+        </div>
         <div className="container">
           <div
             className="z-depth-1 grey lighten-4"

@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Row } from "react-materialize";
 import Foot from "../foot/Foot";
-
 import Maps from "../maps/Maps";
 import WhatIsRoadCall from "../whatIsRoadcall/WhatIsRoadCall";
 import ReportTable from "../reportTable/ReportTable";
@@ -13,7 +12,12 @@ import Header from "../header/Header";
 function Home() {
   //sets a state to whether a submited booking has been posted
 
-  // style={{ border: "2px solid green" }}
+  useEffect(() => {
+    var isLoggedIn = window.localStorage.getItem("isAuthenticated");
+    if (isLoggedIn === "false") {
+      // window.location.pathname = "/login";
+    }
+  }, []);
 
   return (
     <div style={{ backgroundColor: "#e0e0e0" }}>
