@@ -145,7 +145,6 @@ const Signup = () => {
                 </label>
               </div>
 
-              <br />
               <center>
                 <div className="row">
                   <div
