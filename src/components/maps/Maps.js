@@ -144,25 +144,29 @@ function Maps({ setUserID, userID }) {
         className="container"
         style={{ backgroundColor: "black", width: "100%" }}
       >
+        <div
+          className="col l4 s6 center-align"
+          style={{ marginTop: "10px", color: "White" }}
+        >
+          <a onClick={mapStyleChange} class="waves-effect waves-light btn grey">
+            <i class="material-icons right">cloud</i>Map Style
+          </a>
+        </div>
+        <div className="col l4 s6">
+          <Locate panTo={panTo} />
+        </div>
         <div className="row" style={{ margin: "0px", width: "100%" }}>
           <div className="col l4 s12">
             <Search panTo={panTo} />
-          </div>
-          <div
-            className="col l4 s6 center-align"
-            style={{ marginTop: "10px", color: "White" }}
-          >
-            <a class="waves-effect waves-light btn grey">
-              <i class="material-icons right">cloud</i>Map Style
-            </a>
-          </div>
-          <div className="col l4 s6">
-            <Locate panTo={panTo} />
           </div>
         </div>
       </div>
     </div>
   );
+}
+
+function mapStyleChange() {
+  console.log((options.styles = style2));
 }
 
 function Locate({ panTo }) {
