@@ -34,8 +34,8 @@ import Button from "@mui/material/Button";
 const libraries = ["places"];
 
 const mapContainerStyle = {
-  height: "95.5vh",
-  width: "100vw",
+  height: "650px",
+  width: "100%",
 };
 
 const options = {
@@ -134,21 +134,34 @@ function Maps({ setUserID, userID }) {
   };
 
   return (
-    <div>
-      <Locate panTo={panTo} />
-
-      <Search panTo={panTo} />
-
+    <div style={{ border: "3px solid black" }}>
+      <div
+        className="container"
+        style={{ backgroundColor: "black", width: "100%" }}
+      >
+        <div
+          className="col l4 s6 center-align"
+          style={{ marginTop: "10px", color: "White" }}
+        >
+          <a class="waves-effect waves-light btn grey">
+            <i class="material-icons right">cloud</i>Map Style
+          </a>
+        </div>
+        <div className="col l4 s6">
+          <Locate panTo={panTo} />
+        </div>
+        <div className="row" style={{ margin: "0px", width: "100%" }}>
+          <div className="col l4 s12">
+            <Search panTo={panTo} />
+          </div>
+        </div>
+      </div>
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
         zoom={7.3}
         center={center}
         options={options}
-        onClick={(event) => {
-          handleOpen();
-          onMapClick(event);
-        }}
         onLoad={onMapLoad}
       >
         {getEvents.map((marker) => (
@@ -185,32 +198,6 @@ function Maps({ setUserID, userID }) {
           </InfoWindow>
         ) : null}
       </GoogleMap>
-
-      {/* <Locate panTo={panTo} /> */}
-      <div>
-        <Button id="postEventClick" onClick={handleOpen}>
-          Open modal
-        </Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="parent-modal-title"
-          aria-describedby="parent-modal-description"
-        >
-          <Box sx={{ ...style, width: 600 }}>
-            <h2 id="parent-modal-title">Event Log</h2>
-            <p id="parent-modal-description">
-              <DetailsModal
-                latToPost={latToPost}
-                lngToPost={lngToPost}
-                open={open}
-                setOpen={setOpen}
-              ></DetailsModal>
-            </p>
-            {/* <ChildModal /> */}
-          </Box>
-        </Modal>
-      </div>
     </div>
   );
 }
@@ -218,7 +205,8 @@ function Maps({ setUserID, userID }) {
 function Locate({ panTo }) {
   return (
     <button
-      className="locate"
+      style={{ marginTop: "10px", color: "white" }}
+      className="locate waves-effect waves-light btn grey"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -231,7 +219,7 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <img src="/compass.svg" alt="compass" style={{ width: "80px" }} />
+      <i class="material-icons right">cloud</i> Your Locate
     </button>
   );
 }
@@ -267,21 +255,19 @@ function Search({ panTo }) {
       const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
     } catch (error) {
-      console.log("😱 Error: ", error);
+      console.log("Error: ", error);
     }
   };
 
   return (
-    <div className="search" style={{ float: "left" }}>
+    <div className="search" style={{}}>
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
+          style={{ color: "White" }}
           value={value}
           onChange={handleInput}
           disabled={!ready}
           placeholder="Search your location"
-          style={{
-            color: "Black",
-          }}
         />
         <ComboboxPopover>
           <ComboboxList>
