@@ -8,7 +8,12 @@ function Header() {
   var isLoggedIn = window.localStorage.getItem("isAuthenticated");
   var userEmail = window.localStorage.getItem("userEmail");
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    var isLoggedIn = window.localStorage.getItem("isAuthenticated");
+    if (isLoggedIn === "false") {
+      localStorage.setItem("userEmail", "");
+    }
+  }, []);
 
   return (
     <nav>
@@ -25,12 +30,11 @@ function Header() {
             alt="LOGO"
           ></img>
         </a>
-        <a style={{ marginLeft: "70px" }}>{userEmail}</a>
 
         {window.location.pathname === "/home" ? (
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li style={{ marginRight: "140px", pointerEvents: "none" }}>
-              <a>{userEmail}</a>
+              <a style={{ color: "#145d89" }}>{userEmail}</a>
             </li>
             <li className="center active">
               <a>Home</a>
@@ -98,7 +102,7 @@ function sleep(ms) {
 }
 
 function logIn() {
-  sleep(1500).then(() => {
+  sleep().then(() => {
     window.location.pathname = "/login";
   });
 }
