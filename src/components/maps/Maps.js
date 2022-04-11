@@ -176,21 +176,17 @@ function Maps({ setUserID, userID }) {
 
       <div
         className="container"
-        style={{ backgroundColor: "black", width: "100%" }}
+        style={{ backgroundColor: "#145d89", width: "100%" }}
       >
-        <div
-          className="col l4 s6 center-align"
-          style={{ marginTop: "10px", color: "White" }}
-        >
-          {/* <a onClick={mapStyleChange} class="waves-effect waves-light btn grey">
-            <i class="material-icons right">cloud</i>Map Style
-          </a> */}
-
-          <div className="col l12">
+        <div className="row" style={{ marginBottom: "0%" }}>
+          <div className="col l6 s12 center">
+            <h6 style={{ marginTop: "0.5%" }}>
+              <b>Choose a Map style</b>
+            </h6>
             <a
               id="1"
               style={{ margin: "0.5%" }}
-              class="waves-effect waves-light btn-small grey"
+              class="waves-effect waves-light btn-small black"
               onClick={mapStyleChange}
               data-value1="1"
             >
@@ -199,7 +195,7 @@ function Maps({ setUserID, userID }) {
             <a
               id="2"
               style={{ margin: "0.5%" }}
-              class="waves-effect waves-light btn-small grey"
+              class="waves-effect waves-light btn-small black"
               onClick={mapStyleChange}
               data-value1="2"
             >
@@ -208,7 +204,7 @@ function Maps({ setUserID, userID }) {
             <a
               id="3"
               style={{ margin: "0.5%" }}
-              class="waves-effect waves-light btn-small grey"
+              class="waves-effect waves-light btn-small black"
               onClick={mapStyleChange}
               data-value1="3"
             >
@@ -217,21 +213,35 @@ function Maps({ setUserID, userID }) {
             <a
               id="4"
               style={{ margin: "0.5%" }}
-              class="waves-effect waves-light btn-small grey"
+              class="waves-effect waves-light btn-small black"
               onClick={mapStyleChange}
               data-value1="4"
             >
               Corporate
             </a>
           </div>
-        </div>
-        <div className="col l4 s6">
-          <Locate panTo={panTo} />
-        </div>
-        <div className="row" style={{ margin: "0px", width: "100%" }}>
-          <div className="col l4 s12">
+
+          <div className="col l2 s12 center" style={{ marginTop: "0.25%" }}>
+            <h6 style={{ marginTop: "0.5%" }}>
+              <b>Current Location</b>
+            </h6>
+
+            <a
+              style={{}}
+              class="waves-effect waves-light btn-small black center"
+            >
+              <Locate panTo={panTo} />
+            </a>
+          </div>
+
+          <div className="col s1"> </div>
+
+          <div style={{ marginTop: "0.5%" }} className="col l3 s10 center">
             <Search panTo={panTo} />
           </div>
+          <div className="col s1"> </div>
+
+          <div className="col l1"> </div>
         </div>
       </div>
     </div>
@@ -241,8 +251,8 @@ function Maps({ setUserID, userID }) {
 function Locate({ panTo }) {
   return (
     <button
-      style={{ marginTop: "10px", color: "white" }}
-      className="locate waves-effect waves-light btn grey"
+      style={{ color: "white" }}
+      className="locate waves-effect waves-light btn-small black"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -255,7 +265,7 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <i class="material-icons right">cloud</i> Your Locate
+      Locate
     </button>
   );
 }

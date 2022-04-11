@@ -37,16 +37,12 @@ function Header() {
               <a style={{ color: "#145d89" }}>{userEmail}</a>
             </li>
             <li className="center active">
-              <a style={{ color: "#145d89" }} href="/home">
-                Home
-              </a>
+              <a href="/home">Home</a>
             </li>
             <li className="center">
               {isLoggedIn === "true" ? (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                <a style={{ color: "#145d89" }} href="/profile">
-                  Profile
-                </a>
+                <a href="/profile">Profile</a>
               ) : (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
                 <a></a>
@@ -55,30 +51,22 @@ function Header() {
             <li className="center">
               {isLoggedIn === "true" ? (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                <a style={{ color: "#145d89" }} onClick={logOut}>
-                  Logout
-                </a>
+                <a onClick={logOut}>Logout</a>
               ) : (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                <a style={{ color: "#145d89" }} onClick={logIn}>
-                  Login
-                </a>
+                <a onClick={logIn}>Login</a>
               )}
             </li>
           </ul>
         ) : (
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li className="center">
-              <a style={{ color: "#145d89" }} href="/home">
-                Home
-              </a>
+              <a href="/home">Home</a>
             </li>
             <li className="center active">
               {isLoggedIn === "true" ? (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                <a style={{ color: "#145d89" }} href="/profile">
-                  Profile
-                </a>
+                <a href="/profile">Profile</a>
               ) : (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
                 <a></a>
@@ -87,14 +75,10 @@ function Header() {
             <li className="center">
               {isLoggedIn === "true" ? (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                <a style={{ color: "#145d89" }} onClick={logOut}>
-                  Logout
-                </a>
+                <a onClick={logOut}>Logout</a>
               ) : (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                <a style={{ color: "#145d89" }} onClick={logIn}>
-                  Login
-                </a>
+                <a onClick={logIn}>Login</a>
               )}
             </li>
           </ul>
