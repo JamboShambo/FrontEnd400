@@ -20,7 +20,9 @@ function Home() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#e0e0e0" }}>
+    // <div style={{ backgroundColor: "#e0e0e0" }}>
+
+    <div style={{ backgroundColor: "" }}>
       <div style={{ paddingBottom: "10px" }} class="col l8 s12">
         <Header></Header>
       </div>
@@ -35,15 +37,18 @@ function Home() {
 
       <div className="container">
         <div class="row">
-          <div class="col l8 s12">
+          <div class="col l12 s12">
             <Maps />
+          </div>
+
+          <div class="col l8 s12">
+            <ReportTable></ReportTable>
           </div>
 
           <div class="col l4 s12">
             <Categories></Categories>
           </div>
-          <div class="col l4 s12">NEWS</div>
-          <div class="col l8 s12">
+          <div class="col l4 s12">
             <ReportTable></ReportTable>
           </div>
         </div>
@@ -62,11 +67,11 @@ function Home() {
         style={{
           marginBottom: "0%",
           marginTop: "0%",
-          height: "1000px",
+          height: "150%",
         }}
       ></Row>
 
-      <Row style={{ marginBottom: "0%", marginTop: "0%" }}>
+      <Row style={{ marginBottom: "0%", marginTop: "3%" }}>
         <Foot></Foot>
       </Row>
     </div>

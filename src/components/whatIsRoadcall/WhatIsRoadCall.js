@@ -5,11 +5,14 @@ import "../whatIsRoadcall/WhatIsRoadCall.css";
 
 function WhatIsRoadCall() {
   return (
-    <div style={{}}>
-      <div className="col l3"></div>
+    <div className="" style={{}}>
+      <div className="col"></div>
 
-      <div className="col l6">
-        <div class="card-panel grey">
+      <div className="col l12">
+        <div
+          style={{ padding: "2%", margin: "" }}
+          class="card-panel grey z-depth-3"
+        >
           <span class="white-text">
             Welcome to RoadCall! Here is where you can help your local
             communities by reporting infastructure related problems like pot
@@ -22,7 +25,7 @@ function WhatIsRoadCall() {
         </div>
       </div>
 
-      <div className="col l3"></div>
+      <div className="col"></div>
     </div>
   );
 }

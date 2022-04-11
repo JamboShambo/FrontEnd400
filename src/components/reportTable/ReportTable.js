@@ -27,7 +27,7 @@ function ReportTable() {
   }
 
   return (
-    <div className="z-depth-1 lighten-1" style={{ backgroundColor: "#145d89" }}>
+    <div className="z-depth-3" style={{ backgroundColor: "#145d89" }}>
       <h3 className="center">Latest Reports</h3>
       <div className="white" style={{}}>
         <table className="highlight responsive-table">
