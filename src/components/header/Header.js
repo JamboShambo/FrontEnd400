@@ -37,12 +37,12 @@ function Header() {
               <a style={{ color: "#145d89" }}>{userEmail}</a>
             </li>
             <li className="center active">
-              <a>Home</a>
+              <a href="/home">Home</a>
             </li>
             <li className="center">
               {isLoggedIn === "true" ? (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                <a>Profile</a>
+                <a href="/profile">Profile</a>
               ) : (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
                 <a></a>
@@ -61,12 +61,12 @@ function Header() {
         ) : (
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li className="center">
-              <a>Home</a>
+              <a href="/home">Home</a>
             </li>
             <li className="center active">
               {isLoggedIn === "true" ? (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                <a>Profile</a>
+                <a href="/profile">Profile</a>
               ) : (
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
                 <a></a>
@@ -87,8 +87,6 @@ function Header() {
     </nav>
   );
 }
-
-// element.classList.add("my-class");
 
 function logOut() {
   sleep(1500).then(() => {

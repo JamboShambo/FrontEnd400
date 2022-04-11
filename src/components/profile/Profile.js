@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import { Row } from "react-materialize";
@@ -9,7 +9,12 @@ import ProfileMap from "../profileMap/ProfileMap";
 import CategoriesProfile from "../categoryProfile/CategoriesProfile";
 
 function Profile() {
-  //sets a state to whether a submited booking has been posted
+  useEffect(() => {
+    var isLoggedIn = window.localStorage.getItem("isAuthenticated");
+    if (isLoggedIn === "false") {
+      window.location.pathname = "/login";
+    }
+  }, []);
 
   return (
     <div style={{ backgroundColor: "#e0e0e0" }}>

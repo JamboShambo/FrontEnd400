@@ -39,8 +39,10 @@ function Categories() {
   };
 
   return (
-    <div className="z-depth-1 lighten-1" style={{ backgroundColor: "#145d89" }}>
-      <h3 className="center">Categories</h3>
+    <div className="z-depth-3" style={{ backgroundColor: "#145d89" }}>
+      <h3 className="center">
+        <b>Categories</b>
+      </h3>
       <p className="center">
         These are the different types of events you can report!
       </p>

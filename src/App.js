@@ -13,11 +13,11 @@ function App() {
   return (
     <Router>
       <Switch>
+        <ProtectedRoute path="/profile" component={Profile} />
+        <ProtectedRoute path="/admin" component={AdminHome} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/" component={Home} />
-        <ProtectedRoute path="/profile" component={Profile} />
-        <ProtectedRoute path="/admin" component={AdminHome} />
       </Switch>
     </Router>
   );

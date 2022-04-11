@@ -32,11 +32,6 @@ const mapContainerStyle = {
   width: "100%",
 };
 
-var options = {
-  styles: style5,
-  disableDefaultUI: true,
-  zoomControl: true,
-};
 const center = {
   lat: 53.52647,
   lng: -7.433293,
@@ -54,7 +49,13 @@ function Maps({ setUserID, userID }) {
 
   const [selected, setSelected] = React.useState(null);
   const [getEvents, setGetEvents] = React.useState([]);
+  const [newMapStyle, setNewMapStyle] = React.useState("");
 
+  var options = {
+    styles: newMapStyle,
+    disableDefaultUI: true,
+    zoomControl: true,
+  };
   useEffect(() => {}, []);
 
   const getTheEvents = () => {
@@ -83,20 +84,53 @@ function Maps({ setUserID, userID }) {
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
+    localStorage.setItem("mapStyleChoice", style1);
+    var mapChoice = window.localStorage.getItem("mapStyleChoice");
+    setNewMapStyle(style1);
+
     mapRef.current = map;
     getTheEvents();
+
+    // var mapChoice = window.localStorage.getItem("mapStyleChoice");
+
+    // if (mapChoice !== "default") {
+    //   localStorage.setItem("mapStyleChoice", "default");
+    //   setNewMapStyle()
+    // }
+    // else{
+    //   localStorage.setItem("mapStyleChoice", "default");
+    // }
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(8);
+    mapRef.current.setZoom(18);
   }, []);
+
+  const mapStyleChange = (e) => {
+    const value1 = e.currentTarget.getAttribute("data-value1");
+
+    if (value1 === "1") {
+      setNewMapStyle(style1);
+      var ele = document.getElementById("1");
+      ele.classList.add("red");
+    }
+    if (value1 === "2") {
+      setNewMapStyle(style2);
+    }
+    if (value1 === "3") {
+      setNewMapStyle(style3);
+    }
+    if (value1 === "4") {
+      setNewMapStyle(style4);
+    }
+  };
 
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
 
   return (
-    <div style={{ border: "3px solid black" }}>
+    <div className="z-depth-5" style={{ border: "3px solid black" }}>
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
@@ -142,38 +176,83 @@ function Maps({ setUserID, userID }) {
 
       <div
         className="container"
-        style={{ backgroundColor: "black", width: "100%" }}
+        style={{ backgroundColor: "#145d89", width: "100%" }}
       >
-        <div
-          className="col l4 s6 center-align"
-          style={{ marginTop: "10px", color: "White" }}
-        >
-          <a onClick={mapStyleChange} class="waves-effect waves-light btn grey">
-            <i class="material-icons right">cloud</i>Map Style
-          </a>
-        </div>
-        <div className="col l4 s6">
-          <Locate panTo={panTo} />
-        </div>
-        <div className="row" style={{ margin: "0px", width: "100%" }}>
-          <div className="col l4 s12">
+        <div className="row" style={{ marginBottom: "0%" }}>
+          <div className="col l6 s12 center">
+            <h6 style={{ marginTop: "0.5%" }}>
+              <b>Choose a Map style</b>
+            </h6>
+            <a
+              id="1"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small black"
+              onClick={mapStyleChange}
+              data-value1="1"
+            >
+              Default
+            </a>
+            <a
+              id="2"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small black"
+              onClick={mapStyleChange}
+              data-value1="2"
+            >
+              Bright
+            </a>
+            <a
+              id="3"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small black"
+              onClick={mapStyleChange}
+              data-value1="3"
+            >
+              Dark
+            </a>
+            <a
+              id="4"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small black"
+              onClick={mapStyleChange}
+              data-value1="4"
+            >
+              Corporate
+            </a>
+          </div>
+
+          <div className="col l2 s12 center" style={{ marginTop: "0.25%" }}>
+            <h6 style={{ marginTop: "0.5%" }}>
+              <b>Current Location</b>
+            </h6>
+
+            <a
+              style={{}}
+              class="waves-effect waves-light btn-small black center"
+            >
+              <Locate panTo={panTo} />
+            </a>
+          </div>
+
+          <div className="col s1"> </div>
+
+          <div style={{ marginTop: "0.5%" }} className="col l3 s10 center">
             <Search panTo={panTo} />
           </div>
+          <div className="col s1"> </div>
+
+          <div className="col l1"> </div>
         </div>
       </div>
     </div>
   );
 }
 
-function mapStyleChange() {
-  console.log((options.styles = style2));
-}
-
 function Locate({ panTo }) {
   return (
     <button
-      style={{ marginTop: "10px", color: "white" }}
-      className="locate waves-effect waves-light btn grey"
+      style={{ color: "white" }}
+      className="locate waves-effect waves-light btn-small black"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -186,7 +265,7 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <i class="material-icons right">cloud</i> Your Locate
+      Locate
     </button>
   );
 }
