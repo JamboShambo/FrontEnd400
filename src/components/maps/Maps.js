@@ -32,11 +32,6 @@ const mapContainerStyle = {
   width: "100%",
 };
 
-var options = {
-  styles: style5,
-  disableDefaultUI: true,
-  zoomControl: true,
-};
 const center = {
   lat: 53.52647,
   lng: -7.433293,
@@ -54,7 +49,13 @@ function Maps({ setUserID, userID }) {
 
   const [selected, setSelected] = React.useState(null);
   const [getEvents, setGetEvents] = React.useState([]);
+  const [newMapStyle, setNewMapStyle] = React.useState("");
 
+  var options = {
+    styles: newMapStyle,
+    disableDefaultUI: true,
+    zoomControl: true,
+  };
   useEffect(() => {}, []);
 
   const getTheEvents = () => {
@@ -83,20 +84,53 @@ function Maps({ setUserID, userID }) {
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
+    localStorage.setItem("mapStyleChoice", style1);
+    var mapChoice = window.localStorage.getItem("mapStyleChoice");
+    setNewMapStyle(style1);
+
     mapRef.current = map;
     getTheEvents();
+
+    // var mapChoice = window.localStorage.getItem("mapStyleChoice");
+
+    // if (mapChoice !== "default") {
+    //   localStorage.setItem("mapStyleChoice", "default");
+    //   setNewMapStyle()
+    // }
+    // else{
+    //   localStorage.setItem("mapStyleChoice", "default");
+    // }
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(8);
+    mapRef.current.setZoom(18);
   }, []);
+
+  const mapStyleChange = (e) => {
+    const value1 = e.currentTarget.getAttribute("data-value1");
+
+    if (value1 === "1") {
+      setNewMapStyle(style1);
+      var ele = document.getElementById("1");
+      ele.classList.add("red");
+    }
+    if (value1 === "2") {
+      setNewMapStyle(style2);
+    }
+    if (value1 === "3") {
+      setNewMapStyle(style3);
+    }
+    if (value1 === "4") {
+      setNewMapStyle(style4);
+    }
+  };
 
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
 
   return (
-    <div style={{ border: "3px solid black" }}>
+    <div className="z-depth-5" style={{ border: "3px solid black" }}>
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
@@ -148,9 +182,48 @@ function Maps({ setUserID, userID }) {
           className="col l4 s6 center-align"
           style={{ marginTop: "10px", color: "White" }}
         >
-          <a onClick={mapStyleChange} class="waves-effect waves-light btn grey">
+          {/* <a onClick={mapStyleChange} class="waves-effect waves-light btn grey">
             <i class="material-icons right">cloud</i>Map Style
-          </a>
+          </a> */}
+
+          <div className="col l12">
+            <a
+              id="1"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small grey"
+              onClick={mapStyleChange}
+              data-value1="1"
+            >
+              Default
+            </a>
+            <a
+              id="2"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small grey"
+              onClick={mapStyleChange}
+              data-value1="2"
+            >
+              Bright
+            </a>
+            <a
+              id="3"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small grey"
+              onClick={mapStyleChange}
+              data-value1="3"
+            >
+              Dark
+            </a>
+            <a
+              id="4"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small grey"
+              onClick={mapStyleChange}
+              data-value1="4"
+            >
+              Corporate
+            </a>
+          </div>
         </div>
         <div className="col l4 s6">
           <Locate panTo={panTo} />
@@ -163,10 +236,6 @@ function Maps({ setUserID, userID }) {
       </div>
     </div>
   );
-}
-
-function mapStyleChange() {
-  console.log((options.styles = style2));
 }
 
 function Locate({ panTo }) {
