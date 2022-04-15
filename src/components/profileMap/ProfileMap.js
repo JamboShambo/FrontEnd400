@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from "react";
 import axios from "axios";
 import "materialize-css";
@@ -22,10 +23,9 @@ import {
 } from "@reach/combobox";
 
 import "@reach/combobox/styles.css";
-import { style1, style2, style3, style4, style5 } from "../maps/MapsStyle";
+import { style1, style2, style3, style4 } from "../maps/MapsStyle";
 import envVars from "../../config";
 import DetailsModal from "../detailsModal/DetailsModal";
-// import NestedModal from "../modal/Modal";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -34,15 +34,10 @@ import Button from "@mui/material/Button";
 const libraries = ["places"];
 
 const mapContainerStyle = {
-  height: "650px",
+  height: "500px",
   width: "100%",
 };
 
-const options = {
-  styles: style1,
-  disableDefaultUI: true,
-  zoomControl: true,
-};
 const center = {
   lat: 53.52647,
   lng: -7.433293,
@@ -52,7 +47,7 @@ const center = {
 
 const theUserID = window.localStorage.getItem("userID");
 
-function Maps({ setUserID, userID }) {
+function ProfileMap({ setUserID, userID }) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: envVars.gmapkey,
     libraries,
@@ -63,6 +58,14 @@ function Maps({ setUserID, userID }) {
   const [open, setOpen] = React.useState(false);
   const [latToPost, setLatToPost] = React.useState("");
   const [lngToPost, setLngToPost] = React.useState("");
+  const [newMapStyle, setNewMapStyle] = React.useState("");
+  const [reverseGeoState, setReverseGeoState] = React.useState([]);
+
+  const options = {
+    styles: newMapStyle,
+    disableDefaultUI: true,
+    zoomControl: true,
+  };
 
   // const [userID, setUserID] = React.useState("");
 
@@ -88,28 +91,130 @@ function Maps({ setUserID, userID }) {
       });
   };
 
+  // const getTheReversGeo = () => {
+  //   var theLat = window.localStorage.getItem("setLatToPost");
+  //   var theLng = window.localStorage.getItem("setLngToPost");
+
+  //   var config2 = {
+  //     method: "GET",
+  //     url:
+  //       "https://nominatim.openstreetmap.org/reverse?lat=" +
+  //       theLat +
+  //       "&" +
+  //       "lon=" +
+  //       theLng +
+  //       "&format=json",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+
+  //   axios(config2)
+  //     // .then((response) => {
+  //     //   console.log(response);
+  //     //   localStorage.setItem("reverseGeo",JSON.stringify(response.data.address));
+  //     //   setReverseGeoState(response.data.address);
+  //     // })
+  //     .then((response) => {
+  //       setReverseGeoState(
+  //         {
+  //           response: response.data.address,
+  //         },
+  //         () =>
+  //           localStorage.setItem(
+  //             "reverseGeo",
+  //             JSON.stringify(response.data.address)
+  //           )
+  //       );
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+
+  //   console.log(reverseGeoState);
+  // };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   const onMapClick = React.useCallback((e) => {
     console.log(e);
     setLatLngState(e);
+
+    var theLat = window.localStorage.getItem("setLatToPost");
+    var theLng = window.localStorage.getItem("setLngToPost");
+
+    var config2 = {
+      method: "GET",
+      url:
+        "https://nominatim.openstreetmap.org/reverse?lat=" +
+        theLat +
+        "&" +
+        "lon=" +
+        theLng +
+        "&format=json",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios(config2)
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem(
+          "reverseGeo",
+          JSON.stringify(response.data.address)
+        );
+        setReverseGeoState(response.data.address);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    console.log(reverseGeoState);
+
+    handleOpen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
+    localStorage.setItem("mapStyleChoice", style1);
+    // var mapChoice = window.localStorage.getItem("mapStyleChoice");
+    setNewMapStyle(style1);
+
     mapRef.current = map;
     getTheEvents();
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(8);
+    mapRef.current.setZoom(17);
   }, []);
+
+  const mapStyleChange = (e) => {
+    const value1 = e.currentTarget.getAttribute("data-value1");
+
+    if (value1 === "1") {
+      setNewMapStyle(style1);
+      var ele = document.getElementById("1");
+      ele.classList.add("red");
+    }
+    if (value1 === "2") {
+      setNewMapStyle(style2);
+    }
+    if (value1 === "3") {
+      setNewMapStyle(style3);
+    }
+    if (value1 === "4") {
+      setNewMapStyle(style4);
+    }
+  };
 
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -117,6 +222,9 @@ function Maps({ setUserID, userID }) {
   function setLatLngState(e) {
     setLatToPost(e.latLng.lat());
     setLngToPost(e.latLng.lng());
+
+    localStorage.setItem("setLatToPost", e.latLng.lat());
+    localStorage.setItem("setLngToPost", e.latLng.lng());
   }
 
   const style = {
@@ -126,34 +234,85 @@ function Maps({ setUserID, userID }) {
     transform: "translate(-50%, -50%)",
     width: 400,
     bgcolor: "background.paper",
-    border: "2px solid #000",
+    border: "5px solid #000",
     boxShadow: 24,
-    pt: 2,
-    px: 4,
-    pb: 3,
+    // pt: 2,
+    // px: 4,
+    // pb: 3,
   };
 
   return (
     <div style={{ border: "3px solid black" }}>
+      {/* <button onClick={testme}>click</button> */}
       <div
         className="container"
-        style={{ backgroundColor: "black", width: "100%" }}
+        style={{
+          backgroundColor: "#145d89",
+          width: "100%",
+          borderBottom: "3px solid black",
+        }}
       >
-        <div
-          className="col l4 s6 center-align"
-          style={{ marginTop: "10px", color: "White" }}
-        >
-          <a class="waves-effect waves-light btn grey">
-            <i class="material-icons right">cloud</i>Map Style
-          </a>
-        </div>
-        <div className="col l4 s6">
-          <Locate panTo={panTo} />
-        </div>
-        <div className="row" style={{ margin: "0px", width: "100%" }}>
-          <div className="col l4 s12">
+        <div className="row" style={{ marginBottom: "0%" }}>
+          <div className="col l6 s12 center">
+            <h6 style={{ marginTop: "0.5%" }}>
+              <b>Choose a Map style</b>
+            </h6>
+            <a
+              id="1"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small black"
+              onClick={mapStyleChange}
+              data-value1="1"
+            >
+              Default
+            </a>
+            <a
+              id="2"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small black"
+              onClick={mapStyleChange}
+              data-value1="2"
+            >
+              Bright
+            </a>
+            <a
+              id="3"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small black"
+              onClick={mapStyleChange}
+              data-value1="3"
+            >
+              Dark
+            </a>
+            <a
+              id="4"
+              style={{ margin: "0.5%" }}
+              class="waves-effect waves-light btn-small black"
+              onClick={mapStyleChange}
+              data-value1="4"
+            >
+              Corporate
+            </a>
+          </div>
+
+          <div className="col l2 s12 center" style={{ marginTop: "0.25%" }}>
+            <h6 style={{ marginTop: "0.5%" }}>
+              <b>Current Location</b>
+            </h6>
+
+            <a class="waves-effect waves-light btn-small black center">
+              <Locate panTo={panTo} />
+            </a>
+          </div>
+
+          <div className="col s1"> </div>
+
+          <div style={{ marginTop: "0.5%" }} className="col l2 s10 center">
             <Search panTo={panTo} />
           </div>
+          <div className="col s1"> </div>
+
+          <div className="col l1"> </div>
         </div>
       </div>
       <GoogleMap
@@ -162,6 +321,10 @@ function Maps({ setUserID, userID }) {
         zoom={7.3}
         center={center}
         options={options}
+        onClick={(event) => {
+          // handleOpen();
+          onMapClick(event);
+        }}
         onLoad={onMapLoad}
       >
         {getEvents.map((marker) => (
@@ -170,9 +333,10 @@ function Maps({ setUserID, userID }) {
             position={{ lat: marker.lat.N, lng: marker.lng.N }}
             onClick={() => {
               setSelected(marker);
+              console.log(marker);
             }}
             icon={{
-              url: `/map-pin.svg`,
+              url: marker.eventTypeImg.S,
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
               scaledSize: new window.google.maps.Size(30, 30),
@@ -198,6 +362,50 @@ function Maps({ setUserID, userID }) {
           </InfoWindow>
         ) : null}
       </GoogleMap>
+
+      <div style={{ display: "none" }}>
+        <Button id="postEventClick" onClick={handleOpen}>
+          Open modal
+        </Button>
+        <Modal
+          style={
+            {
+              // opacity: "0.5",
+            }
+          }
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="parent-modal-title"
+          aria-describedby="parent-modal-description"
+        >
+          <Box style={{}} sx={{ ...style, width: 600 }}>
+            <h2
+              style={{
+                backgroundColor: "#145d89",
+                borderBottom: "5px solid #000",
+                margin: "0%",
+              }}
+              className="center"
+              id="parent-modal-title"
+            >
+              Send a Report!
+            </h2>
+            <p
+              // style={{ border: "5px solid #000" }}
+              id="parent-modal-description"
+            >
+              <DetailsModal
+                latToPost={latToPost}
+                lngToPost={lngToPost}
+                open={open}
+                setOpen={setOpen}
+                reverseGeoState={reverseGeoState}
+              ></DetailsModal>
+            </p>
+            {/* <ChildModal /> */}
+          </Box>
+        </Modal>
+      </div>
     </div>
   );
 }
@@ -205,11 +413,13 @@ function Maps({ setUserID, userID }) {
 function Locate({ panTo }) {
   return (
     <button
-      style={{ marginTop: "10px", color: "white" }}
-      className="locate waves-effect waves-light btn grey"
+      style={{ color: "white" }}
+      className="locate waves-effect waves-light btn-small black"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
+            console.log(position);
+
             panTo({
               lat: position.coords.latitude,
               lng: position.coords.longitude,
@@ -219,7 +429,7 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <i class="material-icons right">cloud</i> Your Locate
+      Locate
     </button>
   );
 }
@@ -282,4 +492,4 @@ function Search({ panTo }) {
   );
 }
 
-export default Maps;
+export default ProfileMap;

@@ -39,14 +39,21 @@ function Categories() {
   };
 
   return (
-    <div className="z-depth-3" style={{ backgroundColor: "#145d89" }}>
-      <h3 className="center">
+    <div
+      className="z-depth-3"
+      style={{
+        backgroundColor: "#145d89",
+        border: "3px solid black",
+        marginTop: "2%",
+      }}
+    >
+      <h3 style={{ margin: "1%" }} className="center">
         <b>Categories</b>
       </h3>
       <p className="center">
         These are the different types of events you can report!
       </p>
-      <div className="grey" style={{}}>
+      <div className="grey" style={{ borderTop: "3px solid black" }}>
         <div
           onMouseOver={MouseOver}
           onClick={handleOpen}

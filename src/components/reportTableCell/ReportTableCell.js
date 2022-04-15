@@ -3,8 +3,6 @@ import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 
 function ReportTableCell(reportTableEvents) {
-  console.log(reportTableEvents);
-
   return (
     <tr>
       <td>{reportTableEvents.me.eventName}</td>

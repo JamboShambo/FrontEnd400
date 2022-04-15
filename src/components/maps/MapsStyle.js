@@ -70,10 +70,13 @@ const style2 = [
     elementType: "all",
     stylers: [
       {
-        saturation: 0,
+        saturation: 10,
       },
       {
         lightness: 0,
+      },
+      {
+        // color: "#ffe100",
       },
     ],
   },
@@ -92,7 +95,10 @@ const style2 = [
     elementType: "labels.icon",
     stylers: [
       {
-        visibility: "off",
+        visibility: "on",
+      },
+      {
+        // color: "#b83d1c",
       },
     ],
   },
@@ -164,7 +170,7 @@ const style3 = [
     elementType: "labels.icon",
     stylers: [
       {
-        visibility: "off",
+        visibility: "simplified",
       },
     ],
   },
@@ -177,21 +183,6 @@ const style3 = [
       },
       {
         lightness: 20,
-      },
-    ],
-  },
-  {
-    featureType: "administrative",
-    elementType: "geometry.stroke",
-    stylers: [
-      {
-        color: "#000000",
-      },
-      {
-        lightness: 17,
-      },
-      {
-        weight: 1.2,
       },
     ],
   },
@@ -234,27 +225,16 @@ const style3 = [
       },
     ],
   },
-  {
-    featureType: "poi",
-    elementType: "geometry",
-    stylers: [
-      {
-        color: "#000000",
-      },
-      {
-        lightness: 21,
-      },
-      {
-        visibility: "on",
-      },
-    ],
-  },
+
   {
     featureType: "poi.business",
     elementType: "geometry",
     stylers: [
       {
         visibility: "on",
+      },
+      {
+        color: "#e5c163",
       },
     ],
   },
@@ -357,18 +337,7 @@ const style3 = [
       },
     ],
   },
-  {
-    featureType: "transit",
-    elementType: "geometry",
-    stylers: [
-      {
-        color: "#000000",
-      },
-      {
-        lightness: 19,
-      },
-    ],
-  },
+
   {
     featureType: "water",
     elementType: "geometry",
@@ -377,7 +346,47 @@ const style3 = [
         color: "#000000",
       },
       {
-        lightness: 17,
+        lightness: 10,
+      },
+    ],
+  },
+  {
+    featureType: "poi",
+    elementType: "all",
+    stylers: [
+      {
+        color: "#000000",
+      },
+      {
+        lightness: 21,
+      },
+      {
+        visibility: "off",
+      },
+    ],
+  },
+  {
+    featureType: "landscape.man_made",
+    elementType: "geometry",
+    stylers: [
+      {
+        color: "#6e6e6e",
+      },
+      {},
+    ],
+  },
+  {
+    featureType: "transit",
+    elementType: "all",
+    stylers: [
+      {
+        color: "#000000",
+      },
+      {
+        visibility: "off",
+      },
+      {
+        lightness: 19,
       },
     ],
   },
@@ -403,7 +412,15 @@ const style4 = [
   },
   {
     featureType: "road",
-    elementType: "labels.icon",
+    elementType: "all",
+    stylers: [
+      {
+        saturation: 0,
+      },
+      {
+        lightness: 0,
+      },
+    ],
   },
   {
     featureType: "landscape.man_made",
@@ -432,13 +449,11 @@ const style4 = [
     ],
   },
   {
-    featureType: "poi.park",
+    featureType: "poi",
+    elementType: "all",
     stylers: [
       {
-        hue: "#44ff00",
-      },
-      {
-        saturation: -23,
+        visibility: "off",
       },
     ],
   },
@@ -501,22 +516,10 @@ const style4 = [
   },
   {
     featureType: "transit",
-    elementType: "labels.text.stroke",
+    elementType: "all",
     stylers: [
       {
-        saturation: -64,
-      },
-      {
-        hue: "#ff9100",
-      },
-      {
-        lightness: 16,
-      },
-      {
-        gamma: 0.47,
-      },
-      {
-        weight: 2.7,
+        visibility: "off",
       },
     ],
   },
@@ -543,6 +546,11 @@ const style5 = [
   {
     featureType: "road",
     elementType: "labels.icon",
+    stylers: [
+      {
+        visibility: "off",
+      },
+    ],
   },
   {
     featureType: "landscape.man_made",
@@ -556,6 +564,25 @@ const style5 = [
       },
     ],
   },
+  {
+    featureType: "road.highway",
+    elementType: "all",
+    stylers: [
+      {
+        visibility: "simplified",
+      },
+    ],
+  },
+  {
+    featureType: "road.arterial",
+    elementType: "labels.icon",
+    stylers: [
+      {
+        visibility: "off",
+      },
+    ],
+  },
+
   {
     featureType: "water",
     stylers: [
@@ -571,13 +598,11 @@ const style5 = [
     ],
   },
   {
-    featureType: "poi.park",
+    featureType: "poi",
+    elementType: "all",
     stylers: [
       {
-        hue: "#44ff00",
-      },
-      {
-        saturation: -23,
+        visibility: "off",
       },
     ],
   },
@@ -622,7 +647,7 @@ const style5 = [
   },
   {
     featureType: "transit.line",
-    elementType: "geometry",
+    elementType: "all",
     stylers: [
       {
         lightness: -48,

@@ -5,3 +5,6 @@ export const regexPasswordMatchError = "Your password does not match";
 export const AccountExistsError = "An account already exists with that Email";
 export const AccountDoesExistsError =
   "An account has been created, please verify your email!";
+export const eventTypeErrorMsg = "Please Select a Report Type!";
+export const eventNameErrorMsg = "Please Enter a Report Name!";
+export const eventDespErrorMsg = "Please Select a Report Description!";

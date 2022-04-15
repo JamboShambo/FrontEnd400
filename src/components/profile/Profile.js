@@ -4,7 +4,7 @@ import "materialize-css/dist/css/materialize.min.css";
 import { Row } from "react-materialize";
 import Foot from "../foot/Foot";
 import Header from "../header/Header";
-import WhatIsRoadCall from "../whatIsRoadcall/WhatIsRoadCall";
+import WhatIsProfile from "../whatIsProfile/WhatIsProfile";
 import ProfileMap from "../profileMap/ProfileMap";
 import CategoriesProfile from "../categoryProfile/CategoriesProfile";
 
@@ -17,16 +17,18 @@ function Profile() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#e0e0e0" }}>
+    <div style={{ height: "100%" }}>
       <div style={{ paddingBottom: "10px" }} class="col l8 s12">
         <Header></Header>
       </div>
 
       <div className="container">
         <div class="row">
+          <div class="col l3"></div>
           <div class="col l6 s12">
-            {/* <WhatIsRoadCall></WhatIsRoadCall> */}
+            <WhatIsProfile></WhatIsProfile>
           </div>
+          <div class="col l3"></div>
         </div>
       </div>
 
@@ -42,13 +44,12 @@ function Profile() {
       <Row
         className="container"
         style={{
-          marginBottom: "0%",
-          marginTop: "0%",
-          height: "1000px",
+          paddingBottom: "5%",
+          marginTop: "",
         }}
       ></Row>
 
-      <Row style={{ marginBottom: "0%", marginTop: "0%" }}>
+      <Row style={{ marginBottom: "0%", marginTop: "" }}>
         <Foot></Foot>
       </Row>
     </div>

@@ -148,6 +148,7 @@ const Signup = () => {
               <center>
                 <div className="row">
                   <div
+                    data-testid="registerButtonTest"
                     onClick={onSubmit}
                     name="btn_login"
                     className="col l12 s12 btn btn-large waves-effect indigo"

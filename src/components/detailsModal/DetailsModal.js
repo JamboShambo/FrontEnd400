@@ -3,12 +3,78 @@ import "materialize-css/dist/css/materialize.min.css";
 import React, { useState } from "react";
 import envVars from "../../config";
 import axios from "axios";
+import {
+  eventTypeErrorMsg,
+  eventNameErrorMsg,
+  eventDespErrorMsg,
+} from "../../componentText/regexError";
 
-function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
+function DetailsModal({
+  latToPost,
+  lngToPost,
+  open,
+  setOpen,
+  reverseGeoStateFromProfile,
+}) {
   const [eventType, setEventType] = useState("");
+  // const [eventTypeImg, setEventTypeImg] = useState("");
+  const [eventTypeErr, setEventTypeErr] = useState(false);
+
   const [eventName, setEventName] = useState("");
+  // const [eventNameImg, setEventNameImg] = useState("");
+  const [eventNameErr, setEventNameErr] = useState(false);
+
   const [eventDescription, setEventDescription] = useState("");
+  // const [eventDescriptionImg, setEventDescriptionImg] = useState("");
+  const [eventDescriptionErr, setEventDescriptionErr] = useState(false);
+
   const [reverseGeoState, setReverseGeoState] = useState([]);
+
+  var graffitiImg = "/graffiti.svg";
+  var roadImg = "/road.svg";
+  var lightingImg = "/street-light.svg";
+  var dumpingImg = "/trash.svg";
+  var treeImg = "/tree.svg";
+
+  const localReverseGeo = window.localStorage.getItem("reverseGeo");
+
+  if (localReverseGeo === "undefined") {
+    console.log("it is undefined");
+
+    window.alert("Invalid click, please try again.");
+
+    window.location.reload();
+  } else {
+    var localReverseGeoParse = JSON.parse(localReverseGeo);
+
+    if (!localReverseGeoParse.road) {
+      localReverseGeoParse.road = "";
+    }
+    if (!localReverseGeoParse.suburb) {
+      localReverseGeoParse.suburb = "";
+    }
+    if (!localReverseGeoParse.city_district) {
+      localReverseGeoParse.city_district = "";
+    }
+    if (!localReverseGeoParse.region) {
+      localReverseGeoParse.region = "";
+    }
+    if (!localReverseGeoParse.county) {
+      localReverseGeoParse.county = "";
+    }
+    if (!localReverseGeoParse.state_district) {
+      localReverseGeoParse.state_district = "";
+    }
+    if (!localReverseGeoParse.postcode) {
+      localReverseGeoParse.postcode = "";
+    }
+    if (!localReverseGeoParse.suburb) {
+      localReverseGeoParse.suburb = "";
+    }
+    if (!localReverseGeoParse.town) {
+      localReverseGeoParse.town = "";
+    }
+  }
 
   var dateOptions = {
     weekday: "long",
@@ -20,22 +86,53 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    //close modal
-    setOpen(false);
+    console.log(event);
+
+    if (eventType === "") {
+      setEventTypeErr(true);
+    }
+    if (eventName === "") {
+      setEventNameErr(true);
+    }
+    if (eventDescription === "") {
+      setEventDescriptionErr(true);
+    }
+
+    if (eventType === "Graffiti") {
+      localStorage.setItem("setEventTypeImg", graffitiImg);
+    }
+    if (eventType === "Road or Path") {
+      localStorage.setItem("setEventTypeImg", roadImg);
+    }
+    if (eventType === "Street Lighting") {
+      localStorage.setItem("setEventTypeImg", lightingImg);
+    }
+    if (eventType === "Litter and Illegal Dumping") {
+      localStorage.setItem("setEventTypeImg", dumpingImg);
+    }
+    if (eventType === "Tree and Grass") {
+      localStorage.setItem("setEventTypeImg", treeImg);
+    }
+
+    // if (
+    //   eventTypeErr === false &&
+    //   eventNameErr === false &&
+    //   eventDescriptionErr === false
+    // ) {
+    //   console.log("hii" + eventType);
 
     //post
-
     getTheReversGeo();
 
     postTheReversGeo();
 
-    //response
-
-    //check response
-
-    //if good
-
-    //if bad
+    //close modal
+    setOpen(false);
+    // } else {
+    // setEventTypeErr(false);
+    // setEventNameErr(false);
+    // setEventDescriptionErr(false);
+    // }
   };
 
   function getRandomInt(max) {
@@ -59,6 +156,8 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
 
     axios(config2)
       .then(function (response) {
+        console.log(reverseGeoStateFromProfile);
+
         console.log(response.data.address);
         localStorage.setItem(
           "reverseGeo",
@@ -72,7 +171,7 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
   };
 
   const postTheReversGeo = () => {
-    const localReverseGeo = window.localStorage.getItem("reverseGeo");
+    // const localReverseGeo = window.localStorage.getItem("reverseGeo");
     var n = JSON.parse(localReverseGeo);
 
     if (!n.road) {
@@ -96,6 +195,7 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
     if (!n.postcode) {
       n.postcode = "";
     }
+
     setReverseGeoState(n);
     console.log(JSON.parse(localReverseGeo));
     console.log(reverseGeoState);
@@ -106,8 +206,11 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
     var dataToPost = JSON.stringify({
       eventID: rngID,
       eventType: eventType,
+      eventTypeImg: window.localStorage.getItem("setEventTypeImg"),
       eventName: eventName,
       eventTime: new Date().toLocaleDateString("en-US", dateOptions),
+      eventTimeDetail: new Date().toLocaleDateString("en-GB"),
+      eventTimeDefault: new Date(),
       eventDescription: eventDescription,
       lat: latToPost,
       lng: lngToPost,
@@ -142,11 +245,16 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
   };
 
   return (
-    <div style={{ width: "50%", paddingTop: "5%" }} className="row">
+    <div style={{ width: "50%", padding: "" }} className="row">
       <form className="col s12" method="post" onSubmit={onSubmit}>
-        <div className="row">
+        <div className="row center">
+          <label className="center">Report Type</label>
+
+          <div style={{ marginBottom: "10px" }} className="regex">
+            <p>{eventTypeErr && eventTypeErrorMsg}</p>
+          </div>
+
           <div class="input-field col s12">
-            <label>Event Type</label>
             <select
               id="eventType"
               type="text"
@@ -155,7 +263,7 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
               className="browser-default"
             >
               <option value="" disabled selected></option>
-              <option value="Graffiti">Graffiti</option>
+              <option value="Graffiti">Graffiti </option>
               <option value="Road or Path">Road or Path</option>
               <option value="Street Lighting">Street Lighting</option>
               <option value="Litter and Illegal Dumping">
@@ -165,7 +273,14 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
             </select>
           </div>
         </div>
-        <div className="row">
+        <div className="row center">
+          <label htmlFor="eventName">Report Name</label>
+
+          <p style={{ color: "red", width: "" }}>
+            {" "}
+            {eventNameErr && eventNameErrorMsg}
+          </p>
+
           <div className="input-field col s12">
             <input
               id="eventName"
@@ -173,10 +288,16 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
               value={eventName}
               onChange={(event) => setEventName(event.target.value)}
             ></input>
-            <label htmlFor="eventName">Event Name</label>
           </div>
         </div>
-        <div className="row">
+        <div className="row center">
+          <label htmlFor="eventDescription">Report Description</label>
+
+          <p style={{ color: "red", width: "" }}>
+            {" "}
+            {eventDescriptionErr && eventDespErrorMsg}
+          </p>
+
           <div className="input-field col s12">
             <input
               id="eventDescription"
@@ -184,22 +305,30 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
               value={eventDescription}
               onChange={(event) => setEventDescription(event.target.value)}
             ></input>
-            <label htmlFor="eventDescription">Event Description</label>
           </div>
         </div>
 
-        <div className="row">
+        <div className="row center">
+          <label htmlFor="eventDescription">Report Location</label>
+
           <div className="input-field col s12">
             <input
               readOnly={true}
               id="coOrds"
               type="text"
-              value={latToPost + " " + lngToPost}
+              value={
+                // JSON.stringify(localReverseGeo)
+                localReverseGeoParse.road +
+                " " +
+                localReverseGeoParse.suburb +
+                " " +
+                localReverseGeoParse.county
+              }
             ></input>
           </div>
         </div>
 
-        <div className="row">
+        <div className="row center">
           {/* <button
             onClick={submitEvent()}
             className="btn waves-effect waves-light"
@@ -211,9 +340,10 @@ function DetailsModal({ latToPost, lngToPost, open, setOpen }) {
           </button> */}
 
           <button
+            id="submitBtn123"
             type="submit"
             name="btnSubmitEvent"
-            className="col btn btn-large waves-effect indigo"
+            className="center submitBtn123 btn btn-large waves-effect black"
           >
             Submit
           </button>

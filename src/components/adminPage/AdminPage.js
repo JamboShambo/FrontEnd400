@@ -38,15 +38,27 @@ function AdminPage() {
   };
 
   return (
-    <div className="center" style={{ padding: "20px" }}>
+    <div className="container">
       <div className="row">
-        <button
-          onClick={() => excel()}
-          name="btnSubmitEvent"
-          className="col-12 btn btn-large waves-effect indigo"
-        >
-          Excel
-        </button>
+        <div className="col l4"></div>
+        <div className="col l4">
+          <div class="card blue-grey darken-1">
+            <h4 style={{ padding: "1%" }} className="center">
+              {" "}
+              Extract to excel
+            </h4>
+            <div class="card-content white-text center">
+              <button
+                onClick={() => excel()}
+                name="btnSubmitEvent"
+                className="btn btn-large waves-effect indigo "
+              >
+                Excel
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="col l4"></div>
       </div>
     </div>
   );

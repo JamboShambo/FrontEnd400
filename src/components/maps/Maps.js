@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from "react";
 import axios from "axios";
 import "materialize-css";
@@ -22,7 +23,7 @@ import {
 } from "@reach/combobox";
 
 import "@reach/combobox/styles.css";
-import { style1, style2, style3, style4, style5 } from "../maps/MapsStyle";
+import { style1, style2, style3, style4 } from "../maps/MapsStyle";
 import envVars from "../../config";
 
 const libraries = ["places"];
@@ -71,7 +72,6 @@ function Maps({ setUserID, userID }) {
           el.lng = parseFloat(el.lng);
         });
         setGetEvents(response.data.events);
-        console.log(response.data.events);
         localStorage.setItem(
           "homePageEvents",
           JSON.stringify(response.data.events)
@@ -80,12 +80,33 @@ function Maps({ setUserID, userID }) {
       .catch((error) => {
         console.log(error);
       });
+
+    //------------------------------------------------
+
+    var homePageEvents = window.localStorage.getItem("homePageEvents");
+
+    //filter by one month ago
+    var startDateMonth = new Date();
+    var pastMonthDate = startDateMonth.getDate() - 30; // -30 days
+    startDateMonth.setDate(pastMonthDate);
+    var endDateMonth = new Date(); //todays date
+
+    var resultOneMonthAgo = homePageEvents.filter((a) => {
+      var date = new Date(a.eventTimeDefault);
+      return date >= startDateMonth && date <= endDateMonth;
+    });
+    console.log(resultOneMonthAgo);
+    var OneMonthCount = resultOneMonthAgo.length;
+
+    window.localStorage.setItem("monthReports", OneMonthCount);
+
+    //------------------------------------------------
   };
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
     localStorage.setItem("mapStyleChoice", style1);
-    var mapChoice = window.localStorage.getItem("mapStyleChoice");
+    // var mapChoice = window.localStorage.getItem("mapStyleChoice");
     setNewMapStyle(style1);
 
     mapRef.current = map;
@@ -131,52 +152,13 @@ function Maps({ setUserID, userID }) {
 
   return (
     <div className="z-depth-5" style={{ border: "3px solid black" }}>
-      <GoogleMap
-        id="map"
-        mapContainerStyle={mapContainerStyle}
-        zoom={7.3}
-        center={center}
-        options={options}
-        onLoad={onMapLoad}
-      >
-        {getEvents.map((marker) => (
-          <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
-              setSelected(marker);
-            }}
-            icon={{
-              url: `/map-pin.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-          />
-        ))}
-
-        {selected ? (
-          <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
-            onCloseClick={() => {
-              setSelected(null);
-            }}
-          >
-            <div>
-              <p>{selected.eventTime}</p>
-              <p>{selected.eventType}</p>
-              <p>{selected.eventName}</p>
-              <p>{selected.road}</p>
-              <p>{selected.suburb}</p>
-              <p>{selected.county}</p>
-            </div>
-          </InfoWindow>
-        ) : null}
-      </GoogleMap>
-
       <div
         className="container"
-        style={{ backgroundColor: "#145d89", width: "100%" }}
+        style={{
+          backgroundColor: "#145d89",
+          width: "100%",
+          borderBottom: "3px solid black",
+        }}
       >
         <div className="row" style={{ marginBottom: "0%" }}>
           <div className="col l6 s12 center">
@@ -236,7 +218,7 @@ function Maps({ setUserID, userID }) {
 
           <div className="col s1"> </div>
 
-          <div style={{ marginTop: "0.5%" }} className="col l3 s10 center">
+          <div style={{ marginTop: "0.5%" }} className="col l2 s10 center">
             <Search panTo={panTo} />
           </div>
           <div className="col s1"> </div>
@@ -244,6 +226,63 @@ function Maps({ setUserID, userID }) {
           <div className="col l1"> </div>
         </div>
       </div>
+
+      <GoogleMap
+        id="map"
+        mapContainerStyle={mapContainerStyle}
+        zoom={7.3}
+        center={center}
+        options={options}
+        onLoad={onMapLoad}
+      >
+        {getEvents.map((marker) => (
+          <Marker
+            key={`${marker.lat}-${marker.lng}`}
+            position={{ lat: marker.lat, lng: marker.lng }}
+            onClick={() => {
+              setSelected(marker);
+            }}
+            icon={{
+              url: marker.eventTypeImg,
+              origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(15, 15),
+              scaledSize: new window.google.maps.Size(30, 30),
+            }}
+          />
+        ))}
+
+        {selected ? (
+          <InfoWindow
+            position={{ lat: selected.lat, lng: selected.lng }}
+            onCloseClick={() => {
+              setSelected(null);
+            }}
+          >
+            <div>
+              <p>
+                <b>Date: </b> {selected.eventTime}
+              </p>
+              <p>
+                <b>Type: </b>
+                {selected.eventType}
+              </p>
+              {/* <p><b>Date: </b>{selected.eventName}</p> */}
+              {selected.road !== "" ? (
+                <p>
+                  <b>Street: </b>
+                  {selected.road}
+                </p>
+              ) : (
+                <p></p>
+              )}
+
+              <p>
+                <b>{selected.county} </b>
+              </p>
+            </div>
+          </InfoWindow>
+        ) : null}
+      </GoogleMap>
     </div>
   );
 }
@@ -300,6 +339,7 @@ function Search({ panTo }) {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
+      setValue("", false);
     } catch (error) {
       console.log("Error: ", error);
     }
