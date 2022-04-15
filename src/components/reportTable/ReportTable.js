@@ -2,15 +2,20 @@ import React, { useEffect } from "react";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import ReportTableCell from "../reportTableCell/ReportTableCell";
+import envVars from "../../config";
+import axios from "axios";
 
-function ReportTable() {
+function ReportTable(getEvents) {
+  JSON.stringify(localStorage.setItem("homePageEvents", getEvents));
+  console.log(getEvents);
+
   var reportTableEvents = JSON.parse(localStorage.getItem("homePageEvents"));
-  var me = reverseArr(reportTableEvents);
 
-  useEffect(() => {
-    console.log(reportTableEvents);
-    console.log(me);
-  }, []);
+  console.log(reportTableEvents);
+
+  var me = reverseArr(getEvents);
+
+  useEffect(() => {}, []);
 
   var rows = [];
 
@@ -27,12 +32,19 @@ function ReportTable() {
   }
 
   return (
-    <div className="z-depth-3" style={{ backgroundColor: "#145d89" }}>
-      <h3 className="center">
+    <div
+      className="z-depth-3"
+      style={{
+        backgroundColor: "#145d89",
+        border: "3px solid black",
+        marginTop: "1%",
+      }}
+    >
+      <h3 style={{ margin: "1%" }} className="center">
         {" "}
         <b>Latest Reports</b>
       </h3>
-      <div className="white" style={{}}>
+      <div className="white" style={{ borderTop: "3px solid black" }}>
         <table className="highlight responsive-table">
           <thead>
             <tr>
