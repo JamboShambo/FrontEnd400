@@ -1,12 +1,17 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import React, { useEffect } from "react";
-import "material-icons";
 import "./Header.css";
 
 function Header() {
   var isLoggedIn = window.localStorage.getItem("isAuthenticated");
   var userEmail = window.localStorage.getItem("userEmail");
+
+  if (isLoggedIn === "false") {
+    userEmail = "";
+  }
 
   useEffect(() => {
     var isLoggedIn = window.localStorage.getItem("isAuthenticated");
@@ -33,11 +38,22 @@ function Header() {
 
         {window.location.pathname === "/home" ? (
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li style={{ marginRight: "140px", pointerEvents: "none" }}>
-              <a style={{ color: "#145d89" }}>{userEmail}</a>
+            <li
+              style={{
+                // paddingRight: "3px",
+                marginRight: "150px",
+                pointerEvents: "none",
+              }}
+            >
+              <a style={{ color: "#145d89" }}>
+                {" "}
+                {userEmail !== "" ? <b>{userEmail}</b> : <b></b>}
+              </a>
             </li>
             <li className="center active">
-              <a href="/home">Home</a>
+              <a data-testid="homeAchore" href="/home">
+                Home
+              </a>
             </li>
             <li className="center">
               {isLoggedIn === "true" ? (
@@ -60,6 +76,12 @@ function Header() {
           </ul>
         ) : (
           <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li style={{ marginRight: "140px", pointerEvents: "none" }}>
+              <a style={{ color: "#145d89" }}>
+                {" "}
+                <b>{userEmail}</b>
+              </a>
+            </li>
             <li className="center">
               <a href="/home">Home</a>
             </li>
