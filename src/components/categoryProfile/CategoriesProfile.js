@@ -39,8 +39,20 @@ function CategoriesProfile() {
   };
 
   return (
-    <div className="z-depth-1 grey lighten-3" style={{ backgroundColor: "" }}>
+    <div
+      className="z-depth-1 grey lighten-3"
+      style={{
+        backgroundColor: "",
+        borderTop: "3px solid black",
+        borderLeft: "3px solid black",
+        borderRight: "3px solid black",
+      }}
+    >
       <div className="grey center" style={{}}>
+        <div class="chip grey">
+          <b style={{ color: "black" }}> CLICK FOR MORE INFO</b>
+        </div>
+
         <div
           onMouseOver={MouseOver}
           onClick={handleOpen}
